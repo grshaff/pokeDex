@@ -2,6 +2,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+` npm install @mui/material @emotion/react @emotion/styled `
+` npm install @mui/icons-material `
+` npm install @fontsource/roboto `
+
 First, run the development server:
 
 ```bash
