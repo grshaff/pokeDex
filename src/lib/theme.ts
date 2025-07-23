@@ -4,7 +4,13 @@ import '@fontsource/poppins';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#42494D',
+      light: '#7B8082',
+      
+    },
+    secondary:{
+      main: '#E6AB09',
+      light: '#ECEDED'
     },
     background: {
       default: 'white',

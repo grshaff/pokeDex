@@ -15,11 +15,18 @@ import MenuItem from '@mui/material/MenuItem';
 import LanguageIcon from '@mui/icons-material/Language';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-
-const pages = ['Home', 'Pokemon Type'];
+const navItems = [
+    { label: 'Home', path: '/' },
+    { label: 'Pokemon Type', path: '/pokemon-type' },
+  ]
 
 function ResponsiveAppBar() {
+  const pathname = usePathname()
+  const currentTabIndex = navItems.findIndex(item => item.path === pathname)
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -63,7 +70,7 @@ function ResponsiveAppBar() {
             
         </Box>
         {/* NavBar */}
-      <Container maxWidth="xl" sx={{ my: {lg:'20px'} }}>
+      <Container maxWidth="xl" sx={{ my: {xs:'10px', md:'12px', lg:'18px'} }}>
         <Toolbar disableGutters>
         {/* Monitor width => 1024px */}
         <Box
@@ -72,20 +79,20 @@ function ResponsiveAppBar() {
             alt="Logo"
             sx={{
                 ml:"50px",
-                
-                width: {lg:'220px', xs:'100px'},
+                width: {md:'150px', lg:'210px'},
                 display: { xs: 'none', md: 'flex' },
                 justifyContent: 'center'
             }}
             />
-        <Box sx={{ ml:4, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+        <Box sx={{ ml:8, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {navItems.map((item, index) => (
               <Button
-                key={page}
+                key={item.path}
+                value={index}
                 onClick={handleCloseNavMenu}
-                sx={{ mr: 3, color: 'black', display: 'block' }}
+                sx={(theme)=>({ textTransform: 'none', fontSize: {md:'0.9rem', lg:'1.25rem'}, mr: 6, color: pathname === item.path ? 'secondary.main' : 'primary.main', display: 'block', fontWeight: pathname === item.path ? 'bold' : 'normal', borderBottom: pathname === item.path ? 1 : 0, borderRadius:0, borderColor: 'secondary.light' })}
               >
-                {page}
+                {item.label}
               </Button>
             ))}
           </Box>
@@ -99,7 +106,7 @@ function ResponsiveAppBar() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon sx={{ color:'#E6AB09'}}/>
+            <MenuIcon color='secondary'/>
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -117,9 +124,9 @@ function ResponsiveAppBar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' }}}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center', color:'black' }}>{page}</Typography>
+              {navItems.map((item, index) => (
+                <MenuItem key={item.path} onClick={handleCloseNavMenu}>
+                  <Typography sx={{ textAlign: 'center', color:'black' }}>{item.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -130,7 +137,7 @@ function ResponsiveAppBar() {
             alt="Logo"
             sx={{
                 mx: 'auto',
-                width: '100px',
+                width: {xs:'130px', sm:'150px'},
                 display: { xs: 'flex', md: 'none' },
                 
             }}
