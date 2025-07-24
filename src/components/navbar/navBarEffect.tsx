@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
-import Navbar from '@/components/navBar'; // import your Navbar component
+import Navbar from '@/components/navbar/navBar'; // import your Navbar component
 
 export default function HideOnScrollNavbar() {
   const [show, setShow] = useState(true);

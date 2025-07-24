@@ -1,6 +1,6 @@
 // src/app/layout.tsx
 import { ReactNode } from 'react'
-import Navbar from '@/components/navBarEffect'
+import Navbar from '@/components/navbar/navBarEffect'
 import ThemeRegistry from '@/components/ThemeRegistry'
 import '@/app/globals.css'
 import { Box } from '@mui/material'

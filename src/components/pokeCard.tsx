@@ -30,7 +30,7 @@ const PokeCard = dynamic(() => import('@/components/pokeCard'), {
         {/* Pokiee image */}
       <CardMedia
         sx={{ width:{xs:'200px',sm:'170px',md:'200px',lg:'280px'}, height: {xs:'170px',sm:'170px',md:'200px',lg:'280px'}, margin:'auto', mt:'30px' }}
-        image={data.sprites.front_default}
+        image={data.sprites.front_default ? data.sprites.front_default : '/not-available.webp'}
         title={pokemonName}
       />
       {/* Pokiee name */}
@@ -61,7 +61,7 @@ const PokeCard = dynamic(() => import('@/components/pokeCard'), {
         <CardActions sx={{margin:'auto', display:'flex'}}>
             <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }} sx={{ justifyContent: 'center', marginBottom: '20px' }}>
                 {data.types.map((typeData, index) => (
-                    <Grid item key={index} size={{xs:'2', sm:'4', md:'5'}}>
+                    <Grid key={index}>
                         <Link href={typeData.type.url} target="_blank" rel="noopener noreferrer">
                         <img
                             src={`/pokemon-types/type_${typeData.type.name}.webp`}

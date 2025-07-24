@@ -18,6 +18,8 @@ export interface PokemonListResponse {
         slot:number, 
         type:{
             name:string, 
-            url:string}}]
+            url:string}}];
+    weight:string;
+    height:string;
   }
   

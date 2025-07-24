@@ -7,9 +7,12 @@ import { Pokemon } from "@/types/pokemon";
 import PaginationControl from "@/components/paginationControl";
 import SearchBar from "@/components/searchBar"
 import SkeletonCard from "@/components/skeletonCard";
+import PokemonModal from "@/components/ModalPopup";
 
-// Load pokemon list
+
 export default function PokeDex() {
+  
+  // Load pokemon list
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(9);
@@ -42,7 +45,7 @@ export default function PokeDex() {
 
   useEffect(() => {
     const getAllPokemonNames = async () => {
-      const listData = await fetchPokemonList(1035, 0); // Fetch all (overkill but safe)
+      const listData = await fetchPokemonList(1035, 0);
       setAllPokemon(listData.results);
     };
     getAllPokemonNames();
@@ -85,11 +88,24 @@ export default function PokeDex() {
     };
   
     search();
-  }, [searchQuery, allPokemon]);
+    }, [searchQuery, allPokemon]);
 
-  const [loading, setLoading] = useState(true);
-  const [searchLoading, setSearchLoading] = useState(false);
-  const totalPokemon = (total*limit);
+    const [loading, setLoading] = useState(true);
+    const [searchLoading, setSearchLoading] = useState(false);
+    const totalPokemon = (total*limit);
+
+    // Modal popup
+    const [openModal, setOpenModal] = useState(false);
+    const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+    const handleOpen = (pokemon: Pokemon) => {
+      setSelectedPokemon(pokemon);
+      setOpenModal(true);
+    };
+  
+    const handleClose = () => {
+      setSelectedPokemon(null);
+      setOpenModal(false);
+    };
 
   return (
     <Box
@@ -164,7 +180,9 @@ export default function PokeDex() {
             ) : searchResults.length > 0 ? (
               searchResults.map((pokemon) => (
                 <Grid key={pokemon.id} size="auto">
-                  <PokeCard data={pokemon} />
+                  <Box onClick={() => handleOpen(pokemon)} sx={{ cursor: 'pointer' }}>
+                    <PokeCard data={pokemon} />
+                  </Box>
                 </Grid>
               ))
             ) : (
@@ -181,12 +199,17 @@ export default function PokeDex() {
           ) : (
             pokemonList.map((pokemon) => (
               <Grid key={pokemon.id} size="auto">
-                <PokeCard data={pokemon} />
+                <Box onClick={() => handleOpen(pokemon)} sx={{ cursor: 'pointer' }}>
+                    <PokeCard data={pokemon} />
+                  </Box>
               </Grid>
             ))
           )}
           </Grid>
         </Box>
+        
+        {/* Modal for details */}
+        <PokemonModal open={openModal} onClose={handleClose} data={selectedPokemon} />
 
         {/* Pagination */}
         {!searching && (
