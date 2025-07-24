@@ -67,10 +67,12 @@ function ResponsiveAppBar() {
             </Stack>
             
         </Box>
+        
         {/* NavBar */}
       <Container maxWidth="xl" sx={{ my: {xs:'10px', md:'12px', lg:'13px'}, paddingX:{md:"100px", lg:"141px"} }}>
         <Toolbar disableGutters>
         {/* Monitor width => 1024px */}
+        <Link href={'/'}>
         <Box
             component="img"
             src='/pokemon-logo.webp'
@@ -82,7 +84,8 @@ function ResponsiveAppBar() {
                 justifyContent: 'center'
             }}
             />
-        <Box 
+          </Link>
+        <Box  width={'1000%'}
         sx={{ ml:6, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {navItems.map((item, index) => (
               <Button
@@ -137,7 +140,9 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <Box
+          <Box width={'100%'}>
+            <Link href={'/'}>
+            <Box
             component="img"
             src='/pokemon-logo.webp'
             alt="Logo"
@@ -148,6 +153,9 @@ function ResponsiveAppBar() {
                 
             }}
             />
+            </Link>
+          </Box>
+          
             
           <Box>
             <Typography sx={{ visibility:'hidden' ,display:{xs: 'flex', md:'none'}}}>spacer</Typography>
