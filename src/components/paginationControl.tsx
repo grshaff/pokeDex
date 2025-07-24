@@ -62,7 +62,7 @@ export default function PaginationControl({ count, page, onPageChange, limit, on
             },
             '& .MuiPaginationItem-root:hover': {
             backgroundColor: 'rgba(255, 255, 255, 0.15)',
-            borderColor: 'white',
+            borderColor: 'white !important',
             },
         }}/>
       <Typography>Total data: {totalPokemon}</Typography>

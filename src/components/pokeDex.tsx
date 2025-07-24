@@ -86,8 +86,9 @@ export default function PokeDex() {
             </Box>
           </Box>
         </Container>
+
         {/* PokeCards */}
-        <Box sx={{marginX:{xs: '100px', sm: '20px', md: '40px', lg:'140px', xl:'500px'}, justifyContent:'center'}}>
+        <Box sx={{marginX:{xs: '100px', sm: '20px', md: '40px', lg:'10px', xl:'20px'}, justifyContent:'center'}}>
         <Grid container rowSpacing={{xs:3, md:5 }} columnSpacing={{ xs: 1, sm: 5, md: 5, lg:10, xl:10 }} columns={{ xs: 2, sm: 8, md: 15 }} sx={{justifyContent:'center', marginx:'10px'}}>
             {pokemonList.map((pokemon) => (
             <Grid key={pokemon.id} size={'auto'}>
@@ -104,7 +105,7 @@ export default function PokeDex() {
           limit={limit}
           onLimitChange={(val) => {
             setLimit(val);
-            setPage(1); // Reset to first page on limit change
+            setPage(1);
           }}
         />
         
