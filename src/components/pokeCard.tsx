@@ -6,21 +6,35 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box, Grid, Stack } from '@mui/material';
+import { Pokemon } from "@/types/pokemon";
 
-export default function MediaCard() {
+interface Props {
+  data: Pokemon;
+}
+
+// Capital first letter for pokie name
+export default function MediaCard({ data }: Props) {
+    function capitalizeFirstLetter(str: string): string {
+        if (str.length === 0) {
+          return ""; 
+        }
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+const pokemonName: string = capitalizeFirstLetter(data.name);
+
   return (
     <Card sx={{ width:{xs:'200px',sm:'200px',md:'240px',lg:'325px'} , maxheight: '550px', boxShadow:3, borderRadius:'15px' }}>
       <CardMedia
         sx={{ width:{xs:'170px',sm:'170px',md:'200px',lg:'280px'}, height: {xs:'170px',sm:'170px',md:'200px',lg:'280px'}, margin:'auto', mt:'30px' }}
-        image="/landscape-placeholder.svg"
-        title="Pokemon"
+        image={data.sprites.front_default}
+        title={pokemonName}
       />
       <CardContent>
         <Typography gutterBottom variant="body2" component="div" sx={{ color: 'primary.light', fontWeight:'700' }}>
-          #001
+          #{data.id}
         </Typography>
         <Typography variant="h4" sx={{ color: 'primary.main', fontWeight:'700', fontSize:{xs:'',sm:'',md:'25px',lg:'34px'} }}>
-          Pokemon name
+            {pokemonName}
         </Typography>
       </CardContent>
       <Box sx={{margin:'auto', display:'flex'}}>

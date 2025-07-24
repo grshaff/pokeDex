@@ -1,8 +1,31 @@
 "use client";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Pagination, Stack, Typography } from "@mui/material";
 import PokeCard from '@/components/pokeCard'
+import { useEffect, useState } from "react";
+import { fetchPokemonList, fetchPokemonDetail } from "@/services/pokeAPI";
+import { Pokemon } from "@/types/pokemon";
+import PaginationControl from "@/components/paginationControl";
 
 export default function PokeDex() {
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(9);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const getData = async () => {
+      const offset = (page - 1) * limit;
+      const listData = await fetchPokemonList(limit, offset);
+      setTotal(Math.ceil(listData.count / limit));
+
+      const detailPromises = listData.results.map((poke) => fetchPokemonDetail(poke.url));
+      const detailedPokemon = await Promise.all(detailPromises);
+      setPokemonList(detailedPokemon);
+    };
+
+    getData();
+  }, [page, limit]);
+
   return (
     <Box
       sx={{
@@ -61,18 +84,28 @@ export default function PokeDex() {
             </Box>
           </Box>
         </Container>
+        {/* PokeCards */}
         <Box sx={{marginX:{xs: '100px', sm: '100px', md: '100px', lg:'140px', xl:'500px'}, justifyContent:'center'}}>
-          
         <Grid container rowSpacing={{xs:3, md:5 }} columnSpacing={{ xs: 1, sm: 2, md: 4, lg:10, xl:10 }} columns={{ xs: 2, sm: 8, md: 15 }} sx={{justifyContent:'center', marginx:'10px'}}>
-            {Array.from(Array(9)).map((_, index) => (
-            <Grid key={index} size={{ xs: 'auto', sm: 3, md: 4.8, lg:5, xl:3.75 }}>
-                <PokeCard/>
+            {pokemonList.map((pokemon) => (
+            <Grid key={pokemon.id} size={{ xs: 'auto', sm: 3, md: 4.8, lg:5, xl:3.75 }}>
+                <PokeCard data={pokemon}/>
             </Grid>
             ))}
-      </Grid>
-
-          
+        </Grid>
         </Box>
+        {/* Pagination */}
+        <PaginationControl
+          count={total}
+          page={page}
+          onPageChange={setPage}
+          limit={limit}
+          onLimitChange={(val) => {
+            setLimit(val);
+            setPage(1); // Reset to first page on limit change
+          }}
+        />
+        
         
       </Box>
     </Box>
