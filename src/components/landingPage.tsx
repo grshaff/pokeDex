@@ -1,7 +1,7 @@
 "use client";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 
-export default function landingPage() {
+export default function LandingPage({ onScrollToPokedex }: { onScrollToPokedex: () => void }) {
   return (  
             <Box
             sx={{
@@ -27,6 +27,7 @@ export default function landingPage() {
             <Typography component='p' sx={{ fontWeight:'400', color:'primary.light', fontSize:{xs:'',sm:'',md:'1rem',lg:'1.25rem'}, marginY:'25px' }}> Thousands of data compiled into one place</Typography>
             <Box sx={{ width: '100%', display: 'flex', justifyContent: { xs: 'center', md: 'flex-start' } }}>
                 <Button
+                    onClick={onScrollToPokedex}
                     variant="contained"
                     sx={{
                     fontSize: '20px',
