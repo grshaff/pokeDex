@@ -49,7 +49,7 @@ export default function LandingPage({ onScrollToPokedex }: { onScrollToPokedex: 
             src='/pokemon-landing.webp'
             alt="Pokemon Character"
             sx={{
-                  width: {xs:'220px',sm:'280px', md:'404px',lg:'534px'},
+                  width: {xs:'220px',sm:'280px', md:'384px',lg:'534px'},
                     
             }}
             />
