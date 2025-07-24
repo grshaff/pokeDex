@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import { fetchPokemonList, fetchPokemonDetail } from "@/services/pokeAPI";
 import { Pokemon } from "@/types/pokemon";
 import PaginationControl from "@/components/paginationControl";
+import SearchBar from "@/components/searchBar"
 
+// Load pokemon list
 export default function PokeDex() {
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
   const [page, setPage] = useState(1);
@@ -25,6 +27,59 @@ export default function PokeDex() {
 
     getData();
   }, [page, limit]);
+
+  // Searchbar to search pokemon by name or id
+  const [searchQuery, setSearchQuery] = useState('');
+  const filteredPokemon = pokemonList.filter((pokemon) =>
+    pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  const [allPokemon, setAllPokemon] = useState<{ name: string, url: string }[]>([]);
+  const [searching, setSearching] = useState(false);
+  const [searchResults, setSearchResults] = useState<Pokemon[]>([]);
+
+  useEffect(() => {
+    const getAllPokemonNames = async () => {
+      const listData = await fetchPokemonList(1035, 0); // Fetch all (overkill but safe)
+      setAllPokemon(listData.results);
+    };
+    getAllPokemonNames();
+  }, []);
+
+  useEffect(() => {
+    const search = async () => {
+      if (searchQuery === "") {
+        setSearching(false);
+        setSearchResults([]);
+        return;
+      }
+  
+      setSearching(true);
+  
+      const matchedByName = allPokemon.filter(poke =>
+        poke.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+  
+      let matchedById: Pokemon[] = [];
+      if (!isNaN(Number(searchQuery))) {
+        try {
+          const pokeById = await fetchPokemonDetail(`https://pokeapi.co/api/v2/pokemon/${searchQuery}`);
+          matchedById = [pokeById];
+        } catch (error) {
+          
+        }
+      }
+  
+      const urls = new Set(matchedByName.map(p => p.url));
+      const detailPromises = matchedByName.map(p => fetchPokemonDetail(p.url));
+      const resultsByName = await Promise.all(detailPromises);
+  
+      const combinedResults = [...matchedById, ...resultsByName.filter(p => !matchedById.find(mp => mp.id === p.id))];
+  
+      setSearchResults(combinedResults);
+    };
+  
+    search();
+  }, [searchQuery, allPokemon]);
 
   const totalPokemon = (total*limit);
 
@@ -48,7 +103,7 @@ export default function PokeDex() {
           top: 0,
           left: 0,
           width: {xs:"2000px", lg: "1440px" },
-          pointerEvents: "none", // ensure it doesn’t block content
+          pointerEvents: "none", 
         }}
       />
       <Box
@@ -83,34 +138,50 @@ export default function PokeDex() {
                 All Generation totaling <br />
                 {totalPokemon} Pokemon
               </Typography>
+              <SearchBar onSearchChange={(value: string) => setSearchQuery(value)}/>
             </Box>
           </Box>
         </Container>
 
         {/* PokeCards */}
         <Box sx={{marginX:{xs: '100px', sm: '20px', md: '40px', lg:'10px', xl:'20px'}, justifyContent:'center'}}>
-        <Grid container rowSpacing={{xs:3, md:5 }} columnSpacing={{ xs: 1, sm: 5, md: 5, lg:10, xl:10 }} columns={{ xs: 2, sm: 8, md: 15 }} sx={{justifyContent:'center', marginx:'10px'}}>
-            {pokemonList.map((pokemon) => (
-            <Grid key={pokemon.id} size={'auto'}>
-                <PokeCard data={pokemon}/>
-            </Grid>
-            ))}
-        </Grid>
+          <Grid container rowSpacing={{xs:3, md:5 }} columnSpacing={{ xs: 1, sm: 5, md: 5, lg:10, xl:10 }} columns={{ xs: 2, sm: 8, md: 15 }} sx={{justifyContent:'center', marginx:'10px'}}>
+            {searching ? (
+              searchResults.length > 0 ? (
+                searchResults.map((pokemon) => (
+                  <Grid key={pokemon.id} size={'auto'}>
+                    <PokeCard data={pokemon} />
+                  </Grid>
+                ))
+              ) : (
+                <Typography sx={{ textAlign: 'center', width: '100%', mt: 4, fontWeight: 600 }}>
+                  No Pokémon match your search.
+                </Typography>
+              )
+            ) : (
+              pokemonList.map((pokemon) => (
+                <Grid key={pokemon.id} size={'auto'}>
+                  <PokeCard data={pokemon} />
+                </Grid>
+              ))
+            )}
+          </Grid>
         </Box>
+
         {/* Pagination */}
-        <PaginationControl
-          count={total}
-          page={page}
-          onPageChange={setPage}
-          limit={limit}
-          onLimitChange={(val) => {
-            setLimit(val);
-            setPage(1);
-          }}
-        />
-        
-        
-      </Box>
+        {!searching && (
+          <PaginationControl
+            count={total}
+            page={page}
+            onPageChange={setPage}
+            limit={limit}
+            onLimitChange={(val) => {
+              setLimit(val);
+              setPage(1);
+            }}
+          />
+        )}  
+        </Box>
     </Box>
   );
 }

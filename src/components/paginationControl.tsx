@@ -54,7 +54,7 @@ export default function PaginationControl({ count, page, onPageChange, limit, on
             
             },
             '& .Mui-selected': {
-            backgroundColor: 'white',
+            backgroundColor: 'white !important',
             color: '#FFCB3B',
             fontWeight: 'bold',
             borderColor: 'white',
