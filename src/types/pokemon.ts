@@ -21,5 +21,11 @@ export interface PokemonListResponse {
             url:string}}];
     weight:string;
     height:string;
+    abilities:[{
+      ability:{
+        name:string;
+      }
+      
+    }]
   }
   

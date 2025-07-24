@@ -1,6 +1,6 @@
-// components/PokemonModal.tsx
-import { Modal, Box, Typography } from "@mui/material";
+import { Modal, Box, Button } from "@mui/material";
 import { Pokemon } from "@/types/pokemon";
+import MainInfo from "@/components/detail/mainInfo";
 
 interface Props {
   open: boolean;
@@ -13,21 +13,21 @@ export default function PokemonModal({ open, onClose, data }: Props) {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={{
-        position: 'absolute', top: '50%', left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: { xs: 300, sm: 400 },
-        bgcolor: 'background.paper',
-        borderRadius: 2,
-        boxShadow: 24,
-        p: 4,
-      }}>
-        <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
-          #{String(data.id).padStart(3, "0")} {data.name.toUpperCase()}
-        </Typography>
-        <img src={data.sprites.front_default ?? '/not-available.webp'} alt={data.name} width={120} />
-        <Typography sx={{ mt: 2 }}>Height: {data.height}</Typography>
-        <Typography>Weight: {data.weight}</Typography>
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: { xs: '95%', sm: '90%', md: '70%', lg: '60%' },
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          bgcolor: 'background.paper',
+          borderRadius: 2,
+          boxShadow: 24,
+        }}
+      >
+        <MainInfo data={data} variant='modal'  />
+        
       </Box>
     </Modal>
   );
