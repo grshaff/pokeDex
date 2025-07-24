@@ -4,15 +4,19 @@ import { Box, Container, Grid, Typography, Stack, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Pokemon } from "@/types/pokemon";
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface Props {
   data: Pokemon;
+  onClick: () => void;
   variant?: 'modal' | 'page';
 }
 
 
 
-export default function MainInfo({ data, variant = 'page' }: Props) {
+
+export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
     const router = useRouter();
 
     // link modal button to detail
@@ -35,6 +39,7 @@ export default function MainInfo({ data, variant = 'page' }: Props) {
 
         {/* Main info for detail page */}
         {variant === 'page' && (
+          
       <Container
         maxWidth="xl"
         sx={{
@@ -184,11 +189,34 @@ export default function MainInfo({ data, variant = 'page' }: Props) {
 
       {/* Main info for modal */}
         {variant === 'modal' && (
+          <Box sx={{ position: 'relative' }}>
+          {/* Close Button */}
+          <IconButton
+            aria-label="close"
+            onClick={onClick} // <-- Your close handler
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              zIndex: 10,
+              backgroundColor: 'white',
+              border: '1px solid',
+              borderColor: 'grey.300',
+              '&:hover': {
+                backgroundColor: 'grey.100',
+              },
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
       <Container
         maxWidth="lg"
-        sx={{ py: { xs: 4, sm: 6 }, px: { xs: 2, sm: 4 } }}
+        sx={{ py: { xs: 4, sm: 4 }, px: { xs: 2, sm: 4 } }}
       >
-        <Grid container spacing={4} alignItems="flex-start">
+        <Grid container spacing={4} alignItems="flex-start" direction={{xs:'column', md:'row'}} sx={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}>
           {/* Pokemon Image */}
           <Grid>
             <Box
@@ -197,7 +225,7 @@ export default function MainInfo({ data, variant = 'page' }: Props) {
               alt={data.name}
               sx={{
                 width: '100%',
-                minWidth: { xs: 220, sm: 280, md: 250 },
+                minWidth: { xs: 150, sm: 220, md: 250 },
                 border: 2,
                 borderRadius: 2,
               }}
@@ -206,8 +234,8 @@ export default function MainInfo({ data, variant = 'page' }: Props) {
 
           {/* Info Section */}
           <Grid>
-            <Stack spacing={2}>
-              <Typography variant="body2" color="primary.light" fontWeight={400}>
+            <Stack spacing={0}>
+              <Typography variant="body2" color="primary.light" fontWeight={700}>
                 #{data.id}
               </Typography>
               <Typography
@@ -221,9 +249,9 @@ export default function MainInfo({ data, variant = 'page' }: Props) {
               >
                 {pokemonName}
               </Typography>
-
+              <Stack spacing={2}>
               {/* Weight & Height */}
-              <Stack direction="row" spacing={4}>
+              <Stack direction="row" spacing={{xs:2, sm:4}}>
                 <Typography color="primary.light" fontWeight={700}>Weight:</Typography>
                 <Typography color="primary.light">{data.weight}</Typography>
                 <Typography color="primary.light" fontWeight={700}>Height:</Typography>
@@ -264,6 +292,7 @@ export default function MainInfo({ data, variant = 'page' }: Props) {
                   ))}
                 </Stack>
               </Stack>
+              </Stack>
               
                 <Button
                     onClick={handleDetailClick}
@@ -281,7 +310,8 @@ export default function MainInfo({ data, variant = 'page' }: Props) {
             </Stack>
           </Grid>
         </Grid>
-      </Container>)}
+        </Container>
+      </Box>)}
     </Box>
   );
 }

@@ -18,7 +18,7 @@ export default function PokemonModal({ open, onClose, data }: Props) {
           position: 'absolute',
           top: '50%', left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: { xs: '95%', sm: '90%', md: '70%', lg: '60%' },
+          width: { xs: '80%', sm: '60%', md: '70%', lg: '60%' },
           maxHeight: '90vh',
           overflowY: 'auto',
           bgcolor: 'background.paper',
@@ -26,7 +26,7 @@ export default function PokemonModal({ open, onClose, data }: Props) {
           boxShadow: 24,
         }}
       >
-        <MainInfo data={data} variant='modal'  />
+        <MainInfo data={data} variant='modal' onClick={onClose}  />
         
       </Box>
     </Modal>
