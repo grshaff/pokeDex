@@ -5,6 +5,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ` npm install @mui/material @emotion/react @emotion/styled `
 ` npm install @mui/icons-material `
 ` npm install @fontsource/poppins`
+` npm install @mui/material `
 
 First, run the development server:
 

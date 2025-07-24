@@ -1,13 +1,9 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Box, Grid, Stack } from '@mui/material';
-import { Pokemon } from "@/types/pokemon";
+import React from 'react';
+import { Card, CardActions, CardContent, CardMedia, Typography, Box, Grid } from '@mui/material';
 import Link from 'next/link';
+import { Pokemon } from "@/types/pokemon";
+import SkeletonCard from "@/components/skeletonCard";
+import dynamic from 'next/dynamic';
 
 interface Props {
   data: Pokemon;
@@ -22,9 +18,12 @@ export default function MediaCard({ data }: Props) {
         return str.charAt(0).toUpperCase() + str.slice(1);
       }
 const pokemonName: string = capitalizeFirstLetter(data.name);
-const getTypeImage = (typeName: string) => {
-    return `/pokemon-types/type_${typeName.toLowerCase()}.webp`;
-  };
+
+const PokeCard = dynamic(() => import('@/components/pokeCard'), {
+    loading: () => <SkeletonCard />,
+    ssr: false,
+  });
+
 
   return (
     <Card sx={{ width:{xs:'250px',sm:'250px',md:'240px',lg:'300px'} , maxheight: '550px', boxShadow:3, borderRadius:'15px' }}>
@@ -87,4 +86,6 @@ const getTypeImage = (typeName: string) => {
       
     </Card>
   );
+
 }
+

@@ -1,8 +1,9 @@
 // src/app/layout.tsx
 import { ReactNode } from 'react'
-import Navbar from '@/components/navBar'
+import Navbar from '@/components/navBarEffect'
 import ThemeRegistry from '@/components/ThemeRegistry'
 import '@/app/globals.css'
+import { Box } from '@mui/material'
 
 export const metadata = {
   title: 'My PokeApp',
@@ -14,8 +15,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body>
         <ThemeRegistry>
+        <Box sx={{ position: 'sticky', top: 0, zIndex: 1000, bgcolor: 'background.paper' }}>
           <Navbar />
-          <main className=".main-wrapper">{children}</main>
+        </Box>
+          <main className=".main-wrapper" style={{ paddingTop: '64px' }}>{children}</main>
         </ThemeRegistry>
       </body>
     </html>

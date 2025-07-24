@@ -6,6 +6,7 @@ import { fetchPokemonList, fetchPokemonDetail } from "@/services/pokeAPI";
 import { Pokemon } from "@/types/pokemon";
 import PaginationControl from "@/components/paginationControl";
 import SearchBar from "@/components/searchBar"
+import SkeletonCard from "@/components/skeletonCard";
 
 // Load pokemon list
 export default function PokeDex() {
@@ -16,15 +17,17 @@ export default function PokeDex() {
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
       const offset = (page - 1) * limit;
       const listData = await fetchPokemonList(limit, offset);
       setTotal(Math.ceil(listData.count / limit));
-
+  
       const detailPromises = listData.results.map((poke) => fetchPokemonDetail(poke.url));
       const detailedPokemon = await Promise.all(detailPromises);
       setPokemonList(detailedPokemon);
+      setLoading(false);
     };
-
+  
     getData();
   }, [page, limit]);
 
@@ -54,6 +57,8 @@ export default function PokeDex() {
       }
   
       setSearching(true);
+      setSearchLoading(true); // Start
+      
   
       const matchedByName = allPokemon.filter(poke =>
         poke.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -76,11 +81,14 @@ export default function PokeDex() {
       const combinedResults = [...matchedById, ...resultsByName.filter(p => !matchedById.find(mp => mp.id === p.id))];
   
       setSearchResults(combinedResults);
+      setSearchLoading(false); // End
     };
   
     search();
   }, [searchQuery, allPokemon]);
 
+  const [loading, setLoading] = useState(true);
+  const [searchLoading, setSearchLoading] = useState(false);
   const totalPokemon = (total*limit);
 
   return (
@@ -146,25 +154,37 @@ export default function PokeDex() {
         {/* PokeCards */}
         <Box sx={{marginX:{xs: '100px', sm: '20px', md: '40px', lg:'10px', xl:'20px'}, justifyContent:'center'}}>
           <Grid container rowSpacing={{xs:3, md:5 }} columnSpacing={{ xs: 1, sm: 5, md: 5, lg:10, xl:10 }} columns={{ xs: 2, sm: 8, md: 15 }} sx={{justifyContent:'center', marginx:'10px'}}>
-            {searching ? (
-              searchResults.length > 0 ? (
-                searchResults.map((pokemon) => (
-                  <Grid key={pokemon.id} size={'auto'}>
-                    <PokeCard data={pokemon} />
-                  </Grid>
-                ))
-              ) : (
-                <Typography sx={{ textAlign: 'center', width: '100%', mt: 4, fontWeight: 600 }}>
-                  No Pokémon match your search.
-                </Typography>
-              )
-            ) : (
-              pokemonList.map((pokemon) => (
-                <Grid key={pokemon.id} size={'auto'}>
+          {searching ? (
+            searchLoading ? (
+              Array.from({ length: 6 }).map((_, idx) => (
+                <Grid key={idx} size="auto">
+                  <SkeletonCard />
+                </Grid>
+              ))
+            ) : searchResults.length > 0 ? (
+              searchResults.map((pokemon) => (
+                <Grid key={pokemon.id} size="auto">
                   <PokeCard data={pokemon} />
                 </Grid>
               ))
-            )}
+            ) : (
+              <Typography sx={{ textAlign: 'center', width: '100%', mt: 4, fontWeight: 600 }}>
+                No Pokémon match your search.
+              </Typography>
+            )
+          ) : loading ? (
+            Array.from({ length: 9 }).map((_, idx) => (
+              <Grid key={idx} size="auto">
+                <SkeletonCard />
+              </Grid>
+            ))
+          ) : (
+            pokemonList.map((pokemon) => (
+              <Grid key={pokemon.id} size="auto">
+                <PokeCard data={pokemon} />
+              </Grid>
+            ))
+          )}
           </Grid>
         </Box>
 
