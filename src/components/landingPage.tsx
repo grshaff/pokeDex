@@ -14,9 +14,10 @@ export default function LandingPage({ onScrollToPokedex }: { onScrollToPokedex: 
             <Container
                 sx={{
                 paddingY: { xs: '20px', md: '50px' },
-                paddingX: { xs: '50px', md: '110px', lg: '40px' },
+                paddingX: { xs:'20px', sm: '50px', md: '110px', lg: '40px' },
                 }}
             >
+            {/* Text and img layout */}
             <Stack direction={{xs:"column-reverse", md:"row"}} spacing={3}
             sx={{ justifyContent: "space-between",
                 alignItems: "center", 
@@ -42,7 +43,7 @@ export default function LandingPage({ onScrollToPokedex }: { onScrollToPokedex: 
             </Box>
             
             </Box>
-            
+            {/* Pokemon image ^-^ */}
             <Box
             component="img"
             src='/pokemon-landing.webp'
