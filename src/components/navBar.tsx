@@ -25,8 +25,6 @@ const navItems = [
 
 function ResponsiveAppBar() {
   const pathname = usePathname()
-  const currentTabIndex = navItems.findIndex(item => item.path === pathname)
-
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -40,9 +38,9 @@ function ResponsiveAppBar() {
   return (
     <AppBar position="static" sx={{ backgroundColor:'white' , boxShadow:'none'}}>
         {/* TopBar */}
-        <Box sx={{ backgroundColor:'#F7F8F8', height:{lg:'40px', sm:'35px' }}}>
-            <Stack direction='row-reverse' sx={{height:'100%', mr:{md:10, sm:'4px'}, color:'#7B8082'}}>
-            <FormControl sx={{ my: 'auto', mr: { sm: '0px', md: '5px' } }}>
+        <Box sx={{ backgroundColor:'#F7F8F8', height:{lg:'32px', sm:'30px' }}}>
+            <Stack direction='row-reverse' sx={{height:'100%', mr:{xs:'15px', sm:'50px', md:"60px", lg:"100px"}, color:'#7B8082'}}>
+            <FormControl sx={{ my: 'auto'}}>
                 <NativeSelect
                     disableUnderline
                     defaultValue={1}
@@ -52,7 +50,7 @@ function ResponsiveAppBar() {
                     }}
                     sx={{
                     color: '#7B8082',
-                    fontSize: {xs:'9px',md:'10px',lg:'14px'},
+                    fontSize: {xs:'9px',md:'10px',lg:'12px'},
                     '& select': {
                         padding: 0,         
                         margin: 0,
@@ -64,13 +62,13 @@ function ResponsiveAppBar() {
                     <option value={2}>Bahasa</option>
                 </NativeSelect>
             </FormControl>
-                <LanguageIcon sx={{ my:{sm:'5px', lg:'8px'} ,mr:{xs:'6px', sm:'10px'}, width:{xs:'16px',sm:'18px'}}}/>
+                <LanguageIcon sx={{ my:'auto' ,mr:{xs:'6px', sm:'8px'}, width:{xs:'16px',sm:'18px'}}}/>
                 
             </Stack>
             
         </Box>
         {/* NavBar */}
-      <Container maxWidth="xl" sx={{ my: {xs:'10px', md:'12px', lg:'18px'} }}>
+      <Container maxWidth="xl" sx={{ my: {xs:'10px', md:'12px', lg:'13px'}, paddingX:{md:"100px", lg:"141px"} }}>
         <Toolbar disableGutters>
         {/* Monitor width => 1024px */}
         <Box
@@ -78,19 +76,21 @@ function ResponsiveAppBar() {
             src='/pokemon-logo.webp'
             alt="Logo"
             sx={{
-                ml:"50px",
-                width: {md:'150px', lg:'210px'},
+                
+                width: {md:'150px', lg:'167px'},
                 display: { xs: 'none', md: 'flex' },
                 justifyContent: 'center'
             }}
             />
-        <Box sx={{ ml:8, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+        <Box 
+        sx={{ ml:6, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {navItems.map((item, index) => (
               <Button
+                href={item.path}
                 key={item.path}
                 value={index}
                 onClick={handleCloseNavMenu}
-                sx={(theme)=>({ textTransform: 'none', fontSize: {md:'0.9rem', lg:'1.25rem'}, mr: 6, color: pathname === item.path ? 'secondary.main' : 'primary.main', display: 'block', fontWeight: pathname === item.path ? 'bold' : 'normal', borderBottom: pathname === item.path ? 1 : 0, borderRadius:0, borderColor: 'secondary.light' })}
+                sx={(theme)=>({ textTransform: 'none', fontSize: {md:'0.9rem', lg:'1rem'}, mr: 6, color: pathname === item.path ? 'secondary.main' : 'primary.main', display: 'block', fontWeight: pathname === item.path ? 'bold' : 'normal', borderBottom: pathname === item.path ? 1 : 0, borderRadius:0, borderColor: 'secondary.light' })}
               >
                 {item.label}
               </Button>
@@ -125,8 +125,14 @@ function ResponsiveAppBar() {
               sx={{ display: { xs: 'block', md: 'none' }}}
             >
               {navItems.map((item, index) => (
-                <MenuItem key={item.path} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center', color:'black' }}>{item.label}</Typography>
+                <MenuItem 
+                key={item.path}
+                 onClick={handleCloseNavMenu}>
+                  <Button 
+                  href={item.path}
+                  value={index}
+                  
+                  sx={(theme)=>({ textTransform: 'none',  color: pathname === item.path ? 'secondary.main' : 'primary.main', display: 'block', fontWeight: pathname === item.path ? 'bold' : 'normal', borderBottom: pathname === item.path ? 1 : 0, borderRadius:0, borderColor: 'secondary.light' })}>{item.label}</Button>
                 </MenuItem>
               ))}
             </Menu>

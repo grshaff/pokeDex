@@ -1,10 +1,13 @@
 "use client";
-import { Container, Typography } from "@mui/material";
-
+import { Box, Container, Typography } from "@mui/material";
+import LandingPage from '@/components/landingPage';
+import PokeDex from '@/components/pokeDex';
 export default function Home() {
   return (
-    <Container>
-      <Typography> Hello pokemon</Typography>
-    </Container>
+    <Box sx={{}}>
+      <LandingPage/>
+      <PokeDex/>
+    </Box>
+    
   );
 }
