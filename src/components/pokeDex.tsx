@@ -26,6 +26,8 @@ export default function PokeDex() {
     getData();
   }, [page, limit]);
 
+  const totalPokemon = (total*limit);
+
   return (
     <Box
       sx={{
@@ -79,16 +81,16 @@ export default function PokeDex() {
               </Typography>
               <Typography sx={{ color: "primary.main" }}>
                 All Generation totaling <br />
-                999999 Pokemon
+                {totalPokemon} Pokemon
               </Typography>
             </Box>
           </Box>
         </Container>
         {/* PokeCards */}
-        <Box sx={{marginX:{xs: '100px', sm: '100px', md: '100px', lg:'140px', xl:'500px'}, justifyContent:'center'}}>
-        <Grid container rowSpacing={{xs:3, md:5 }} columnSpacing={{ xs: 1, sm: 2, md: 4, lg:10, xl:10 }} columns={{ xs: 2, sm: 8, md: 15 }} sx={{justifyContent:'center', marginx:'10px'}}>
+        <Box sx={{marginX:{xs: '100px', sm: '20px', md: '40px', lg:'140px', xl:'500px'}, justifyContent:'center'}}>
+        <Grid container rowSpacing={{xs:3, md:5 }} columnSpacing={{ xs: 1, sm: 5, md: 5, lg:10, xl:10 }} columns={{ xs: 2, sm: 8, md: 15 }} sx={{justifyContent:'center', marginx:'10px'}}>
             {pokemonList.map((pokemon) => (
-            <Grid key={pokemon.id} size={{ xs: 'auto', sm: 3, md: 4.8, lg:5, xl:3.75 }}>
+            <Grid key={pokemon.id} size={'auto'}>
                 <PokeCard data={pokemon}/>
             </Grid>
             ))}
