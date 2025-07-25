@@ -6,11 +6,17 @@ import Link from "next/link";
 import { Pokemon } from "@/types/pokemon";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { colors } from '@/types/pokemon-color'; // adjust path to your `colours` file
+import { colors } from '@/types/pokemon-color'; 
+import { gradientMove } from '@/lib/animation';
 
 const getTypeGradient = (types: string[]) => {
   const typeColors = types.map(type => colors[type] || '#777');
-  return `linear-gradient(135deg, ${typeColors.join(', ')})`;
+  if (typeColors.length < 2){
+    
+    return `linear-gradient(135deg, ${typeColors.join(', ')}, #ffffff)`;
+  }
+  else{
+  return `linear-gradient(135deg, ${typeColors.join(', ')})`;}
 };
 
 interface Props {
@@ -38,7 +44,7 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
     const pokemonName: string = capitalizeFirstLetter(data.name);
 
     const types = data.types.map(t => t.type.name); // e.g., ['fire', 'flying']
-  const gradientBorder = getTypeGradient(types);
+    const gradientBorder = getTypeGradient(types);
     
   return (
     
@@ -70,6 +76,8 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
                 borderRadius: 2,
                 padding: '4px', // thickness of border
                 background: gradientBorder,
+                backgroundSize: '400% 400%',
+                animation: `${gradientMove} 3s ease infinite`,
               }}
             >
               <Box
@@ -80,7 +88,7 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
                   display: 'block',
                   borderRadius: 2,
                   width: { xs: 220, sm: 350, md: '100%' },
-                  minWidth: { xs: 120, sm: 250, md: 280, lg: 450 },
+                  minWidth: { xs: 120, sm: 250, md: 280, lg: 350 },
                   backgroundColor: 'white',
                 }}
               />
@@ -242,6 +250,8 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
           borderRadius: 2,
           padding: '4px', // thickness of border
           background: gradientBorder,
+          backgroundSize: '400% 400%',
+          animation: `${gradientMove} 3s ease infinite`,
         }}
       >
         <Box

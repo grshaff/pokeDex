@@ -1,8 +1,10 @@
 "use client";
 import { useRef } from 'react';
-import { Box, Container, Typography } from "@mui/material";
+import { Box} from "@mui/material";
 import LandingPage from '@/components/landingpage/landingPage';
 import PokeDex from '@/components/landingpage/pokeDex';
+
+
 export default function Home() {
   const pokedexRef = useRef<HTMLDivElement>(null);
 

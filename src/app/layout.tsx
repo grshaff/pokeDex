@@ -5,6 +5,7 @@ import ThemeRegistry from '@/components/ThemeRegistry'
 import '@/app/globals.css'
 import { Box } from '@mui/material'
 
+
 export const metadata = {
   title: 'My PokeApp',
   description: 'Explore Pokemon data from PokeAPI',
