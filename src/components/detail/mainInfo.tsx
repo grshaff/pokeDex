@@ -73,7 +73,7 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
             <Box
               sx={{
                 display: 'inline-block',
-                borderRadius: 2,
+                borderRadius: 4,
                 padding: '4px', // thickness of border
                 background: gradientBorder,
                 backgroundSize: '400% 400%',
@@ -86,7 +86,7 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
                 alt={data.name}
                 sx={{
                   display: 'block',
-                  borderRadius: 2,
+                  borderRadius: 4,
                   width: { xs: 220, sm: 350, md: '100%' },
                   minWidth: { xs: 120, sm: 250, md: 280, lg: 350 },
                   backgroundColor: 'white',
@@ -247,7 +247,7 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
       <Box
         sx={{
           display: 'inline-block',
-          borderRadius: 2,
+          borderRadius: 4,
           padding: '4px', // thickness of border
           background: gradientBorder,
           backgroundSize: '400% 400%',
@@ -261,7 +261,7 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
           sx={{
             width: '100%',
             minWidth: { xs: 150, sm: 220, md: 250 },
-            borderRadius: 2,
+            borderRadius: 4,
             backgroundColor: 'white',
           }}
         />

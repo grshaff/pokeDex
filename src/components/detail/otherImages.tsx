@@ -11,12 +11,6 @@ import {
   DialogContent,
 } from '@mui/material';
 import { Pokemon } from '@/types/pokemon';
-import { colors } from '@/types/pokemon-color'; // adjust path to your `colors` file
-
-const getTypeGradient = (types: string[]) => {
-  const typeColors = types.map((type) => colors[type] || '#777');
-  return `linear-gradient(135deg, ${typeColors.join(', ')})`;
-};
 
 interface Props {
   data: Pokemon;
@@ -35,6 +29,10 @@ export default function OtherImages({ data }: Props) {
     setOpen(false);
     setSelectedImage(null);
   };
+
+  const spriteEntries = Object.entries(data.sprites)
+  .filter(([_, url]) => typeof url === 'string' && url) // filter out nulls and non-URLs
+  .slice(0, 10); // optional: limit how many you show
 
   return (
     <Box sx={{ backgroundColor: 'white', width: '100%' }}>
@@ -81,21 +79,21 @@ export default function OtherImages({ data }: Props) {
               columns={{ xs: 1, sm: 2, md: 10 }}
               sx={{ justifyContent: 'center', px:'10px' }}
             >
-              {Array.from(Array(6)).map((_, index) => (
-                <Grid key={index}>
+              {spriteEntries.map(([key, url], index) => (
+                <Grid >
                   <Box
                     component="img"
-                    src={data.sprites.front_default ?? '/not-available.webp'}
-                    alt={data.name}
+                    src={url}
+                    alt={`${data.name}-${key}`}
                     onClick={() =>
                       handleImageClick(
-                        data.sprites.front_default ?? '/not-available.webp'
+                        url ?? '/not-available.webp'
                       )
                     }
                     sx={{
                       display: 'block',
-                      border: 1,
-                      borderRadius: 2,
+                      border: 2,
+                      borderRadius: 4,
                       cursor: 'pointer',
                       width: {
                         xs: '120px',
@@ -111,7 +109,7 @@ export default function OtherImages({ data }: Props) {
                     }}
                   />
                 </Grid>
-              ))}
+               ))}
             </Grid>
           </Box>
         </Grid>
@@ -134,8 +132,9 @@ export default function OtherImages({ data }: Props) {
               src={selectedImage}
               alt="Full Pokémon view"
               sx={{
-                maxHeight: '90vh',
-                maxWidth: '90vw',
+                height: 'auto',
+                width: '300px',
+                backgroundColor:'white'
               }}
             />
           )}
