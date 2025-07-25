@@ -79,13 +79,13 @@ function ResponsiveAppBar() {
             alt="Logo"
             sx={{
                 
-                width: {md:'150px', lg:'167px'},
+                width: {md:'400px', lg:'500px'},
                 display: { xs: 'none', md: 'flex' },
                 justifyContent: 'center'
             }}
             />
           </Link>
-        <Box  width={'1000%'}
+        <Box  width={'150%'}
         sx={{ ml:6, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {navItems.map((item, index) => (
               <Button
