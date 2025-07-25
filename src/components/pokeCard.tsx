@@ -26,7 +26,7 @@ const PokeCard = dynamic(() => import('@/components/pokeCard'), {
 
 
   return (
-    <Card sx={{ width:{xs:'250px',sm:'250px',md:'240px',lg:'300px'} , maxheight: '550px', boxShadow:3, borderRadius:'15px' }}>
+    <Card sx={{ width:{xs:'250px',sm:'250px',md:'240px',lg:'300px'} , maxheight: '550px', boxShadow:8, borderRadius:'15px' }}>
         {/* Pokiee image */}
       <CardMedia
         sx={{ width:{xs:'200px',sm:'170px',md:'200px',lg:'280px'}, height: {xs:'170px',sm:'170px',md:'200px',lg:'280px'}, margin:'auto', mt:'30px' }}
