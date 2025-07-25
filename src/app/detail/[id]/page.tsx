@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { Container, Typography, CircularProgress, Box } from '@mui/material';
 import MainInfo from '@/components/detail/mainInfo';
 import OtherImages from '@/components/detail/otherImages';
+import Stats from '@/components/detail/stats';
 import { Pokemon } from '@/types/pokemon';
 import { fetchPokemon } from "@/services/pokeAPI";
 
@@ -59,6 +60,7 @@ export default function DetailPage() {
     <Container>
       <MainInfo data={data} variant='page' onClick={handleClose}/>
       <OtherImages data={data}/>
+      <Stats data={data}/>
     </Container>
   );
 }
