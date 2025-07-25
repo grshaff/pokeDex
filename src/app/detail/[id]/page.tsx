@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Container, Typography, CircularProgress, Box } from '@mui/material';
 import MainInfo from '@/components/detail/mainInfo';
 import { Pokemon } from '@/types/pokemon';
+import { fetchPokemon } from "@/services/pokeAPI";
 
 export default function DetailPage() {
   const { id } = useParams(); // get the ID from the route
@@ -14,10 +15,10 @@ export default function DetailPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchPokemon = async () => {
+    const getPokemonDetail = async () => {
       try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
-        setData(response.data);
+        const response = await fetchPokemon(`${id}`);
+        setData(response);
       } catch (err: any) {
         setError('Pokémon not found or failed to load.');
       } finally {
@@ -26,7 +27,7 @@ export default function DetailPage() {
     };
 
     if (id) {
-      fetchPokemon();
+      getPokemonDetail();
     }
   }, [id]);
 
@@ -50,9 +51,13 @@ export default function DetailPage() {
 
   if (!data) return null;
 
+  const handleClose = () => {
+    return
+  }
+
   return (
     <Container>
-      <MainInfo data={data} variant='page' />
+      <MainInfo data={data} variant='page' onClick={handleClose}/>
     </Container>
   );
 }

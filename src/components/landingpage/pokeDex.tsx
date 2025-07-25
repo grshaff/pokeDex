@@ -1,5 +1,5 @@
 "use client";
-import { Box, Container, Grid, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import PokeCard from '@/components/pokeCard'
 import { useEffect, useState } from "react";
 import { fetchPokemonList, fetchPokemonDetail } from "@/services/pokeAPI";
@@ -70,7 +70,7 @@ export default function PokeDex() {
       let matchedById: Pokemon[] = [];
       if (!isNaN(Number(searchQuery))) {
         try {
-          const pokeById = await fetchPokemonDetail(`https://pokeapi.co/api/v2/pokemon/${searchQuery}`);
+          const pokeById = await fetchPokemonDetail(`${searchQuery}`);
           matchedById = [pokeById];
         } catch (error) {
           
@@ -106,7 +106,6 @@ export default function PokeDex() {
       setSelectedPokemon(null);
       setOpenModal(false);
     };
-
   return (
     <Box
       sx={{
