@@ -1,15 +1,20 @@
-"use client";
+'use client';
 
-import { Box, Container, Grid, Typography, Stack, Button } from "@mui/material";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { Pokemon } from "@/types/pokemon";
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { colors } from '@/types/pokemon-color'; // adjust path to your `colours` file
+import { useState } from 'react';
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  Stack,
+  Dialog,
+  DialogContent,
+} from '@mui/material';
+import { Pokemon } from '@/types/pokemon';
+import { colors } from '@/types/pokemon-color'; // adjust path to your `colors` file
 
 const getTypeGradient = (types: string[]) => {
-  const typeColors = types.map(type => colors[type] || '#777');
+  const typeColors = types.map((type) => colors[type] || '#777');
   return `linear-gradient(135deg, ${typeColors.join(', ')})`;
 };
 
@@ -17,61 +22,125 @@ interface Props {
   data: Pokemon;
 }
 
+export default function OtherImages({ data }: Props) {
+  const [open, setOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-export default function OtherImages({data} :Props) {
+  const handleImageClick = (src: string) => {
+    setSelectedImage(src);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedImage(null);
+  };
+
   return (
-    
     <Box sx={{ backgroundColor: 'white', width: '100%' }}>
-
-        {/* Main info for detail page */}
       <Container
         maxWidth="xl"
         sx={{
-            py: { xs: 0, sm: 2 },
-            px: { xs:0, sm: 0, md: '70px', lg:'80px' },
+          py: { xs: 0, sm: 2 },
+          px: { xs: 0, sm: 0, md: '70px', lg: '80px' },
         }}
-    >
+      >
         <Grid
           container
           spacing={4}
-          alignItems={{xs:'center', md:'start'}}
-          justifyContent={{xs:'center', md:'start'}}
+          alignItems={{ xs: 'center', md: 'start' }}
+          justifyContent={{ xs: 'center', md: 'start' }}
           direction={'column'}
-          marginY={{xs:0, md:0}}
+          marginY={{ xs: 0, md: 0 }}
         >
-        <Stack direction={{xs:"row", md:'column'}} spacing={4}>
-                <Typography color="primary.main" fontWeight={700} fontSize= {{
-                    xs: '1rem',
-                    sm: '1.2rem',
-                    md: '1rem',
-                    lg: '1.1rem',
-                    xl: '1.4rem',
-                   }}>Other Images:</Typography>
-            </Stack>
-          {/* Pokemon Image */}
-          <Box width={{xs:'300px', sm:'500px', md:'auto'}} marginX={'auto'}>
-          <Grid container size={'auto'} rowSpacing={{xs:1 }} columnSpacing={{ xs: 1}} columns={{ xs: 1, sm: 2, md: 10 }} sx={{justifyContent:'center', px:'10px'}}>
-            {Array.from(Array(6)).map((_, index) => (
-            <Grid key={index} size={'auto'}>
-                <Box
-                component="img"
-                src={data.sprites.front_default ?? "/not-available.webp"}
-                alt={data.name}
-                sx={{
-                  display: 'block',
-                  border:1,
-                  borderRadius: 2,
-                  width: { xs: '120px', sm: '180px', md:'clamp(100px, 30vw, 130px)', lg:'150px' },
-                  
-                  backgroundColor: 'white',
-                }}
-              />
-            </Grid>))}
-              
-          </Grid>
+          <Stack direction={{ xs: 'row', md: 'column' }} spacing={4}>
+            <Typography
+              color="primary.main"
+              fontWeight={700}
+              fontSize={{
+                xs: '1rem',
+                sm: '1.2rem',
+                md: '1rem',
+                lg: '1.1rem',
+                xl: '1.4rem',
+              }}
+            >
+              Other Images:
+            </Typography>
+          </Stack>
+
+          {/* Pokemon Image Grid */}
+          <Box
+            width={{ xs: '300px', sm: '500px', md: 'auto' }}
+            marginX={'auto'}
+          >
+            <Grid
+              container
+              rowSpacing={{ xs: 1 }}
+              columnSpacing={{ xs: 1 }}
+              columns={{ xs: 1, sm: 2, md: 10 }}
+              sx={{ justifyContent: 'center', px:'10px' }}
+            >
+              {Array.from(Array(6)).map((_, index) => (
+                <Grid key={index}>
+                  <Box
+                    component="img"
+                    src={data.sprites.front_default ?? '/not-available.webp'}
+                    alt={data.name}
+                    onClick={() =>
+                      handleImageClick(
+                        data.sprites.front_default ?? '/not-available.webp'
+                      )
+                    }
+                    sx={{
+                      display: 'block',
+                      border: 1,
+                      borderRadius: 2,
+                      cursor: 'pointer',
+                      width: {
+                        xs: '120px',
+                        sm: '180px',
+                        md: 'clamp(100px,12vw, 130px)',
+                        lg: '150px',
+                      },
+                      backgroundColor: 'white',
+                      transition: 'transform 0.2s ease',
+                      '&:hover': {
+                        transform: 'scale(1.05)',
+                      },
+                    }}
+                  />
+                </Grid>
+              ))}
+            </Grid>
           </Box>
         </Grid>
       </Container>
+
+      {/* Image Pop-up Dialog */}
+      <Dialog open={open} onClose={handleClose} maxWidth="lg">
+        <DialogContent
+          sx={{
+            p: 0,
+            backgroundColor: 'black',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {selectedImage && (
+            <Box
+              component="img"
+              src={selectedImage}
+              alt="Full Pokémon view"
+              sx={{
+                maxHeight: '90vh',
+                maxWidth: '90vw',
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }
