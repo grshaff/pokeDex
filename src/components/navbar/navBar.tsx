@@ -23,7 +23,7 @@ const navItems = [
     { label: 'Pokemon Type', path: '/pokemon-type' },
   ]
 
-function ResponsiveAppBar() {
+export default function ResponsiveAppBar() {
   const pathname = usePathname()
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
@@ -166,4 +166,3 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-export default ResponsiveAppBar;
