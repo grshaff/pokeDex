@@ -6,14 +6,18 @@ import Link from "next/link";
 import { Pokemon } from "@/types/pokemon";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { colors } from '@/types/pokemon-color'; // adjust path to your `colours` file
+
+const getTypeGradient = (types: string[]) => {
+  const typeColors = types.map(type => colors[type] || '#777');
+  return `linear-gradient(135deg, ${typeColors.join(', ')})`;
+};
 
 interface Props {
   data: Pokemon;
   onClick: () => void;
   variant?: 'modal' | 'page';
 }
-
-
 
 
 export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
@@ -24,7 +28,7 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
       router.push(`/detail/${data.id}`);
     };
 
-    // Capitalize nameee
+    // Capitalize namee
     function capitalizeFirstLetter(str: string): string {
       if (str.length === 0) {
         return ""; 
@@ -33,6 +37,9 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
     }
     const pokemonName: string = capitalizeFirstLetter(data.name);
 
+    const types = data.types.map(t => t.type.name); // e.g., ['fire', 'flying']
+  const gradientBorder = getTypeGradient(types);
+    
   return (
     
     <Box sx={{ backgroundColor: 'white', width: '100%' }}>
@@ -58,16 +65,26 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
           {/* Pokemon Image */}
           <Grid>
             <Box
-              component="img"
-              src={data.sprites.front_default ?? "/not-available.webp"}
-              alt={data.name}
               sx={{
-                width: {xs: 220, sm:350, md:'100%'},
-                minWidth: { xs: 120, sm: 250, md: 280, lg:450 },
-                border: 2,
+                display: 'inline-block',
                 borderRadius: 2,
+                padding: '4px', // thickness of border
+                background: gradientBorder,
               }}
-            />
+            >
+              <Box
+                component="img"
+                src={data.sprites.front_default ?? "/not-available.webp"}
+                alt={data.name}
+                sx={{
+                  display: 'block',
+                  borderRadius: 2,
+                  width: { xs: 220, sm: 350, md: '100%' },
+                  minWidth: { xs: 120, sm: 250, md: 280, lg: 450 },
+                  backgroundColor: 'white',
+                }}
+              />
+            </Box>
           </Grid>
 
           {/* Info Section */}
@@ -219,18 +236,27 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
         }}>
           {/* Pokemon Image */}
           <Grid>
-            <Box
-              component="img"
-              src={data.sprites.front_default ?? "/not-available.webp"}
-              alt={data.name}
-              sx={{
-                width: '100%',
-                minWidth: { xs: 150, sm: 220, md: 250 },
-                border: 2,
-                borderRadius: 2,
-              }}
-            />
-          </Grid>
+      <Box
+        sx={{
+          display: 'inline-block',
+          borderRadius: 2,
+          padding: '4px', // thickness of border
+          background: gradientBorder,
+        }}
+      >
+        <Box
+          component="img"
+          src={data.sprites.front_default ?? "/not-available.webp"}
+          alt={data.name}
+          sx={{
+            width: '100%',
+            minWidth: { xs: 150, sm: 220, md: 250 },
+            borderRadius: 2,
+            backgroundColor: 'white',
+          }}
+        />
+      </Box>
+    </Grid>
 
           {/* Info Section */}
           <Grid>
