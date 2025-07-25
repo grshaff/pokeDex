@@ -50,8 +50,8 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
       <Container
         maxWidth="xl"
         sx={{
-            py: { xs: 4, sm: 6, md: 15, lg:15 },
-            px: { xs:0, sm: 0, md: '70px', lg:'14px' },
+            pt: { xs: 4, sm: 6, md: 15, lg:15 },
+            px: { xs:0, sm: 0, md: '70px', lg:'80px' },
         }}
     >
         <Grid
