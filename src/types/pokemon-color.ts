@@ -17,4 +17,10 @@ export const colors: Record<string, string> = {
   dark: '#705746',
   steel: '#B7B7CE',
   fairy: '#D685AD',
+  hp:'#cc4434',
+  attack:'#f8b416',
+  defense:'#f7e945',
+  specialattack:'#353951',
+  specialdefense:'#54a666',
+  speed:'#fc6898',
 };

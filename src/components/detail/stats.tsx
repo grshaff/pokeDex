@@ -12,10 +12,15 @@ import { Pokemon } from '@/types/pokemon';
 import CircularProgress, {
   circularProgressClasses,
 } from '@mui/material/CircularProgress';
+import { colors } from '@/types/pokemon-color'; 
 
 interface Props {
   data: Pokemon;
 }
+
+const getStatColor = (types: string[]) => {
+    const typeColors = types.map(type => colors[type] || '#777')
+    return typeColors;}
 
 export default function Stats({ data }: Props) {
   const [progressValues, setProgressValues] = useState<number[]>(
@@ -42,12 +47,17 @@ export default function Stats({ data }: Props) {
     };
   }, [data.stats]);
 
+  const types = data.stats.map(s => s.stat.name); // e.g., ['fire', 'flying']
+  const typesfiltered = types.map(str => str.replace('-',''));
+  const statColor = getStatColor(typesfiltered);
+  console.log(statColor)
+
   return (
     <Box sx={{ backgroundColor: 'white', width: '100%' }}>
       <Container
         maxWidth="xl"
         sx={{
-          py: { xs: 0, sm: 2 },
+          py: { xs: 4, sm: 2 },
           px: { xs: 0, sm: 0, md: '70px', lg: '80px' },
         }}
       >
@@ -83,7 +93,7 @@ export default function Stats({ data }: Props) {
             <Grid
               container
               rowSpacing={{ xs: 1 }}
-              columnSpacing={{ xs: 1 }}
+              columnSpacing={{ xs: 2 }}
               columns={{ xs: 1, sm: 2, md: 10 }}
               sx={{ justifyContent: 'center', px: '10px' }}
             >
@@ -99,7 +109,7 @@ export default function Stats({ data }: Props) {
                           color: theme.palette.grey[800],
                         }),
                       })}
-                      size={'200px'}
+                      size={'120px'}
                       thickness={4}
                       value={100}
                     />
@@ -108,7 +118,7 @@ export default function Stats({ data }: Props) {
                       variant="determinate"
                       disableShrink
                       sx={(theme) => ({
-                        color: '#1a90ff',
+                        color: statColor[index],
                         animationDuration: '550ms',
                         position: 'absolute',
                         left: 0,
@@ -116,10 +126,10 @@ export default function Stats({ data }: Props) {
                           strokeLinecap: 'round',
                         },
                         ...theme.applyStyles?.('dark', {
-                          color: '#308fe8',
+                          color: statColor,
                         }),
                       })}
-                      size={'200px'}
+                      size={'120px'}
                       thickness={4}
                       value={progressValues[index]}
                     />
@@ -127,16 +137,16 @@ export default function Stats({ data }: Props) {
                     <Box
                       sx={{
                         position: 'absolute',
-                        top: '20%',
+                        top: st.stat.name.length > 10 ? '20%':'27%',
                         left: '50%',
                         transform: 'translateX(-50%)',
                         textAlign: 'center',
                       }}
                     >
-                      <Typography sx={{ fontSize: { xs: '4rem' }, m: 0 }}>
+                      <Typography sx={{ fontSize: { xs: '1.3rem' }, m: 0 }}>
                         {progressValues[index]}
                       </Typography>
-                      <Typography>{st.stat.name}</Typography>
+                      <Typography sx={{ fontSize: { xs: '0.8rem' }, m: 0 }}>{st.stat.name}</Typography>
                     </Box>
                   </Box>
                 </Grid>
