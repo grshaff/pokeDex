@@ -13,6 +13,7 @@ import CircularProgress, {
   circularProgressClasses,
 } from '@mui/material/CircularProgress';
 import { colors, EvolveColors } from '@/types/pokemon-color'; 
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
 interface Props {
   data: Pokemon;
@@ -61,7 +62,7 @@ export default function Stats({ data, evolutionChain }: Props) {
 
 
   return (
-    <Box sx={{ backgroundColor: 'white', width: '100%' }}>
+    <Box sx={{ backgroundColor: 'white', width: '100%', mb:10 }}>
 
         {/* Stats */}
       <Container
@@ -170,8 +171,9 @@ export default function Stats({ data, evolutionChain }: Props) {
       <Container
         maxWidth="xl"
         sx={{
-          py: { xs: 4, sm: 2 },
+          py: { xs: 0, sm: 2 },
           px: { xs: 0, sm: 0, md: '70px', lg: '80px' },
+          pb:10
         }}
       >
         <Grid
@@ -198,7 +200,7 @@ export default function Stats({ data, evolutionChain }: Props) {
             </Typography>
           </Stack>
 
-          {/* Stat Circles */}
+          {/* Images */}
           <Box
             width={{ xs: '300px', sm: '500px', md: 'auto' }}
             marginX={'auto'}
@@ -206,20 +208,20 @@ export default function Stats({ data, evolutionChain }: Props) {
             <Grid
               container
               rowSpacing={{ xs: 1 }}
-              columnSpacing={{ xs: 2 }}
+              columnSpacing={{ xs: 3, sm:1, md:2 }}
               columns={{ xs: 1, sm: 2, md: 10 }}
-              sx={{ justifyContent: 'center', px: '10px' }}
+              sx={{ justifyContent: 'center', px: '10px', alignItems:'center' }}
             >
               {evolutionChain.map(([id, name, imgUrl], index) => (
                 <React.Fragment key={id}>
-                  <Box sx={{textAlign:'center'}}>
+                  <Box sx={{textAlign:'center', justifyContent:'center'}}>
                   <Box
                     component="img"
                     src={imgUrl}
                     alt={name}
                     onClick={() => window.location.href = `/detail/${id}`}
                     sx={{
-                      width: { xs: 80, sm: 100, md: 120 },
+                      width: { xs: 130, sm:120, md: 140 },
                       cursor: 'pointer',
                       border: 8,
                       borderRadius: '50%',
@@ -230,14 +232,17 @@ export default function Stats({ data, evolutionChain }: Props) {
                       transition: 'transform 0.2s ease',
                     }}
                   />
-                  <Typography>{capitalizeFirstLetter(name)}</Typography>
+                  <Typography sx={{fontWeight:700, color:EvolveColors[index]}}>{capitalizeFirstLetter(name)}</Typography>
+                  {index < evolutionChain.length - 1 && (
+                    <DoubleArrowIcon sx={{color:EvolveColors[index+1]  ,fontSize:{xs:'60px',},display:{xs:'flex',sm:'none'}, transform: 'rotate(90deg)', justifySelf:'center'}}/>
+                  )}
                   </Box>
                   
                   {index < evolutionChain.length - 1 && (
-                    <Typography fontSize="2rem" color="text.secondary">
-                      →
-                    </Typography>
+                    <DoubleArrowIcon sx={{color:EvolveColors[index+1]  ,fontSize:{sm:'40px',md:'80px'}, mb:'20px',display:{xs:'none',sm:'flex'}}}/>
                   )}
+                  
+                  
                 </React.Fragment>
               ))}
             </Grid>

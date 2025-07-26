@@ -90,7 +90,7 @@ export default function DetailPage() {
     <Container>
       <MainInfo data={data} variant='page' onClick={handleClose}/>
       <OtherImages data={data}/>
-      <Stats data={data} evolutionChain={evolutionChain} />
+      <Stats data={data} evolutionChain={evolutionChain}/>
     </Container>
   );
 }
