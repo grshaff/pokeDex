@@ -9,6 +9,7 @@ import SearchBar from "@/components/searchBar";
 import SkeletonCard from "@/components/skeletonCard";
 import PokemonModal from "@/components/ModalPopup";
 import LoadingBar from "@/components/loadingBar";
+import { Reveal } from "../revealAnimation";
 
 export default function PokeDex() {
   // Load pokemon list
@@ -159,6 +160,7 @@ export default function PokeDex() {
         <Container sx={{ py: "80px" }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Box sx={{ textAlign: "center" }}>
+              <Reveal>
               <Typography
                 sx={{
                   fontSize: "40px",
@@ -175,6 +177,7 @@ export default function PokeDex() {
               <SearchBar
                 onSearchChange={(value: string) => setSearchQuery(value)}
               />
+              </Reveal>
             </Box>
           </Box>
         </Container>
@@ -240,6 +243,7 @@ export default function PokeDex() {
                       cursor: "pointer",
                       transition: "transform 0.2s ease-in-out",
                     }}
+                    
                     onMouseOver={(e) =>
                       (e.currentTarget.style.transform = "scale(1.05)")
                     }
@@ -247,7 +251,9 @@ export default function PokeDex() {
                       (e.currentTarget.style.transform = "scale(1)")
                     }
                   >
+                    <Reveal>
                     <PokeCard data={pokemon} />
+                    </Reveal>
                   </Box>
                 </Grid>
               ))

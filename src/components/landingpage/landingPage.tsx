@@ -1,5 +1,6 @@
 "use client";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import {Reveal} from "@/components/revealAnimation"
 
 export default function LandingPage({
   onScrollToPokedex,
@@ -32,6 +33,7 @@ export default function LandingPage({
           }}
         >
           <Box>
+          <Reveal>
             <Typography
               component="h1"
               sx={{
@@ -49,6 +51,8 @@ export default function LandingPage({
               All the Pokémon<br></br> data you'll ever <br></br> need in one
               place!
             </Typography>
+            </Reveal>
+            <Reveal>
             <Typography
               component="p"
               sx={{
@@ -61,13 +65,22 @@ export default function LandingPage({
               {" "}
               Thousands of data compiled into one place
             </Typography>
+            </Reveal>
             <Box
               sx={{
                 width: "100%",
                 display: "flex",
                 justifyContent: { xs: "center", md: "flex-start" },
+                transition: "transform 0.2s ease-in-out",
               }}
+              onMouseOver={(e) =>
+                (e.currentTarget.style.transform = "scale(1.05)")
+              }
+              onMouseOut={(e) =>
+                (e.currentTarget.style.transform = "scale(1)")
+              }
             >
+              <Reveal>
               <Button
                 onClick={onScrollToPokedex}
                 variant="contained"
@@ -77,13 +90,17 @@ export default function LandingPage({
                   backgroundColor: "secondary.main",
                   padding: { lg: "12px 56px", md: "10px 40px" },
                   borderRadius: "14px",
+                  
                 }}
+                
               >
                 Check PokèDex
               </Button>
+              </Reveal>
             </Box>
           </Box>
           {/* Pokemon image ^-^ */}
+          <Reveal>
           <Box
             component="img"
             src="/pokemon-landing.webp"
@@ -92,6 +109,7 @@ export default function LandingPage({
               width: { xs: "220px", sm: "280px", md: "384px", lg: "534px" },
             }}
           />
+          </Reveal>
         </Stack>
       </Container>
     </Box>

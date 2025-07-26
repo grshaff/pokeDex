@@ -7,6 +7,7 @@ import type { Pokemon } from "@/types/pokemon";
 import PaginationControl from "@/components/paginationControl";
 import PokemonModal from "@/components/ModalPopup";
 import LoadingBar from "@/components/loadingBar";
+import { Reveal } from "../revealAnimation";
 
 interface PokeType {
   name: string;
@@ -193,7 +194,9 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
                       },
                     }}
                   >
+                    <Reveal width="100%">
                     <PokeCard data={pokemon} variant="table" />
+                    </Reveal>
                   </Box>
                 ))
               ) : (

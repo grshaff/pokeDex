@@ -44,7 +44,7 @@ export default function MediaCard({ data, variant = "card" }: Props) {
           sx={{
             width: { xs: "250px", sm: "250px", md: "240px", lg: "300px" },
             maxheight: "550px",
-            boxShadow: 8,
+            boxShadow: 0,
             borderRadius: "15px",
           }}
         >

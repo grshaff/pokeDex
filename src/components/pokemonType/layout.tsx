@@ -13,6 +13,7 @@ import TypeTable from "@/components/pokemonType/TypeTable";
 import { PokeTypes } from "@/types/pokemon-info";
 import type { Pokemon } from "@/types/pokemon";
 import { colors } from "@/types/pokemon-info";
+import { Reveal } from "../revealAnimation";
 
 interface PokeType {
   name: string;
