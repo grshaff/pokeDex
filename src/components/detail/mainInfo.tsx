@@ -358,7 +358,7 @@ export default function MainInfo({ data, onClick, variant = "page" }: Props) {
                       <Stack spacing={0.5}>
                         {data.abilities.map((ab, i) => (
                           <Typography key={i} color="primary.light">
-                            • {ab.ability.name}
+                            • {capitalizeFirstLetter(ab.ability.name)}
                           </Typography>
                         ))}
                       </Stack>

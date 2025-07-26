@@ -103,12 +103,15 @@ export default function MediaCard({ data, variant = "card" }: Props) {
                 {data.types.map((typeData, index) => (
                   <Grid key={index}>
                     <Link
-                      href={typeData.type.url}
+                      href={`/pokemon-types/${typeData.type.name}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <img
                         src={`/pokemon-types/type_${typeData.type.name}.webp`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
                         alt={typeData.type.name}
                         style={{
                           width: "100%",
@@ -232,12 +235,15 @@ export default function MediaCard({ data, variant = "card" }: Props) {
               {data.types.map((typeData, index) => (
                 <Link
                   key={index}
-                  href={typeData.type.url}
+                  href={`/pokemon-types/${typeData.type.name}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <Box
                     component="img"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
                     src={`/pokemon-types/type_${typeData.type.name}.webp`}
                     alt={typeData.type.name}
                     sx={{
