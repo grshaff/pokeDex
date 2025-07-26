@@ -95,49 +95,53 @@ const PokeCard = dynamic(() => import('@/components/pokeCard'), {
 {variant === 'table' && (
     <Card
     sx={{
-      width: "1000px",
-      maxWidth: "700px",
+      width: '100%',
       mb: 1,
       boxShadow: 2,
-      borderRadius: "8px",
+      borderRadius: '8px',
       "&:hover": {
         boxShadow: 4,
-        transform: "translateY(-2px)",
-        transition: "all 0.2s ease-in-out",
+        transform: 'translateY(-2px)',
+        transition: 'all 0.2s ease-in-out',
       },
     }}
   >
     <Box
       sx={{
-        display: "flex",
-        alignItems: "center",
+        display: 'flex',
+        alignItems: 'center',
         p: 2,
-        gap: 2,
+        gap: {xs:2,sm:4},
+        width: '100%', // Ensure flex container respects full width
       }}
     >
       {/* Image Column */}
       <Box
         sx={{
-          minWidth: { xs: "60px", sm: "80px" },
-          display: "flex",
-          justifyContent: "center",
+          flexShrink: 0,
+          
+          minWidth: { xs: 30, sm: 80 },
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
         <Avatar
           src={data.sprites.front_default || "/not-available.webp"}
           alt={pokemonName}
           sx={{
-            width: { xs: 60, sm: 80 },
-            height: { xs: 60, sm: 80 },
+            minWidth: { xs: 30, sm: 80 },
+            minHeight: { xs: 30, sm: 80 },
             bgcolor: "grey.100",
           }}
         />
       </Box>
+  
       <Divider orientation="vertical" flexItem />
+  
       {/* ID Column */}
       <Box
         sx={{
-          minWidth: { xs: "60px", sm: "80px" },
+          flexShrink: 0,
           textAlign: "center",
         }}
       >
@@ -146,41 +150,41 @@ const PokeCard = dynamic(() => import('@/components/pokeCard'), {
           sx={{
             color: "primary.light",
             fontWeight: 700,
-            fontSize: { xs: "12px", sm: "14px" },
+            fontSize: { xs: "8px", sm: "14px" },
           }}
         >
           #{String(data.id).padStart(3, "0")}
         </Typography>
       </Box>
+  
       <Divider orientation="vertical" flexItem />
+  
       {/* Pokemon Name Column */}
-      <Box
-        sx={{
-          flex: 1,
-          minWidth: 0, // Important for text truncation
-        }}
-      >
+      <Box sx={{ flexShrink:1, flexGrow:1, minWidth: 0 }}>
         <Typography
           variant="h6"
           sx={{
             color: "primary.main",
             fontWeight: 600,
-            fontSize: { xs: "16px", sm: "18px", md: "20px" },
+            fontSize: { xs: "12px", sm: "18px", md: "20px" },
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
+            textAlign:'center'
           }}
         >
           {pokemonName}
         </Typography>
       </Box>
+  
       <Divider orientation="vertical" flexItem />
+  
       {/* Type Column */}
       <Box
         sx={{
-          display: "flex",
+          display: {xs:"block"},
           gap: 1,
-          minWidth: { xs: "80px", sm: "120px" },
+          flexShrink: 0,
           justifyContent: "flex-end",
         }}
       >
@@ -191,7 +195,7 @@ const PokeCard = dynamic(() => import('@/components/pokeCard'), {
               src={`/pokemon-types/type_${typeData.type.name}.webp`}
               alt={typeData.type.name}
               sx={{
-                width: { xs: "30px", sm: "80px" },
+                width: { xs: "60px", sm:"80px" },
                 cursor: "pointer",
                 borderRadius: "4px",
                 transition: "transform 0.2s ease-in-out",
@@ -205,6 +209,7 @@ const PokeCard = dynamic(() => import('@/components/pokeCard'), {
       </Box>
     </Box>
   </Card>
+  
 )
 }
     </Box>

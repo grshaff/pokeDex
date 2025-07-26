@@ -120,6 +120,8 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
   return (
     <Box
       sx={{
+        borderRadius:2,
+        boxShadow:8,
         width: "100%",
         position: "relative",
         backgroundColor: "hsla(0, 0%, 100%, 0.8)",
@@ -136,7 +138,7 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
         }}
       >
         <Container sx={{ py: 4 }}>
-          <Box sx={{ display: "flex", justifyContent: "start", mb: 4 }}>
+          <Box sx={{ display: "flex", justifyContent: "start" }}>
             <Box sx={{ textAlign: "start" }}>
               <Typography sx={{ fontSize: "32px", fontWeight: 700, color: "primary.main" }}>
                 Pokemon with {selectedTypes.map((type) => type.name).join(" + ")} Type
@@ -158,7 +160,7 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
           <>
 
             {/* Pokemon Cards */}
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "stretch", gap: 1 , mx:{xs:1,sm:4}}}>
               {paginatedPokemon.length > 0 ? (
                 paginatedPokemon.map((pokemon) => (
                   <Box

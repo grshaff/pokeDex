@@ -234,7 +234,7 @@ export default function Stats({ data, evolutionChain }: Props) {
                   />
                   <Typography sx={{fontWeight:700, color:EvolveColors[index]}}>{capitalizeFirstLetter(name)}</Typography>
                   {index < evolutionChain.length - 1 && (
-                    <DoubleArrowIcon sx={{color:EvolveColors[index+1]  ,fontSize:{xs:'60px',},display:{xs:'flex',sm:'none'}, transform: 'rotate(90deg)', justifySelf:'center'}}/>
+                    <DoubleArrowIcon sx={{color:EvolveColors[index+1]  ,fontSize:{xs:'60px',},display:{xs:'flex',sm:'none'}, transform: 'rotate(90deg)', mx:'auto'}}/>
                   )}
                   </Box>
                   

@@ -68,11 +68,13 @@ export default function Layout() {
       </Box>
 
       {/* Main content */}
-      <Box sx={{ zIndex: 10, position: "relative" }}>
+      <Box sx={{ zIndex: 10, position: "relative"}}>
         <Container>
-          <Stack direction={"row"} spacing={3}>
+          <Stack direction={{xs:"column", md:"row"}} spacing={3}>
+
+            {/* Category select */}
             <Box width={"250px"}>
-              <Typography variant="h4" color="initial" my={2}>
+              <Typography variant="h6" color="primary.main" my={2}>
                 Pokemon Type
               </Typography>
               <Autocomplete  
@@ -96,6 +98,8 @@ export default function Layout() {
               />
             </Box>
             <Divider orientation="vertical" flexItem />
+
+            {/* Pokemon list */}
             <Box sx={{ flex: 1 }}>
               <TypeTable selectedTypes={selectedTypes} />
             </Box>

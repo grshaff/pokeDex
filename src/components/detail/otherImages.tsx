@@ -31,7 +31,7 @@ export default function OtherImages({ data }: Props) {
   };
 
   const spriteEntries = Object.entries(data.sprites)
-  .filter(([_, url]) => typeof url === 'string' && url) // filter out nulls and non-URLs
+  .filter(([key, url]) => typeof url === 'string' && url && !key.includes('_female'))
   .slice(0, 10); // optional: limit how many you show
   console.log(spriteEntries)
 
