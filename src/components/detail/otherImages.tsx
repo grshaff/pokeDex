@@ -1,7 +1,13 @@
-"use client";
-
 import { useState } from "react";
-import {Box, Container, Grid, Typography, Stack, Dialog, DialogContent} from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  Stack,
+  Dialog,
+  DialogContent,
+} from "@mui/material";
 import { Pokemon } from "@/types/pokemon";
 
 interface Props {

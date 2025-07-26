@@ -1,4 +1,3 @@
-"use client";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Box, Container, Grid, Typography, Stack } from "@mui/material";
@@ -11,7 +10,7 @@ import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 
 interface Props {
   data: Pokemon;
-  evolutionChain: [number, string, string][]; 
+  evolutionChain: [number, string, string][];
 }
 
 // convert stat name to hex color
@@ -22,7 +21,7 @@ const getStatColor = (types: string[]) => {
 
 export default function Stats({ data, evolutionChain }: Props) {
   const [progressValues, setProgressValues] = useState<number[]>(
-    data.stats.map(() => 0) 
+    data.stats.map(() => 0)
   );
 
   useEffect(() => {
@@ -37,7 +36,7 @@ export default function Stats({ data, evolutionChain }: Props) {
           }
           return newValues;
         });
-      }, 15); 
+      }, 15);
     });
 
     return () => {

@@ -1,4 +1,3 @@
-"use client";
 import { Box, Container, Typography, CircularProgress } from "@mui/material";
 import PokeCard from "@/components/pokeCard";
 import { useEffect, useState } from "react";

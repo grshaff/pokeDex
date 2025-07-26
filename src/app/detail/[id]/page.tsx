@@ -1,16 +1,16 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Container, Typography, Box } from "@mui/material";
 import { Pokemon } from "@/types/pokemon";
-import {fetchPokemonById, fetchPokemonEvolutionChain} from "@/services/pokeAPI";
+import {
+  fetchPokemonById,
+  fetchPokemonEvolutionChain,
+} from "@/services/pokeAPI";
 import MainInfo from "@/components/detail/mainInfo";
 import OtherImages from "@/components/detail/otherImages";
 import Stats from "@/components/detail/stats";
-import LoadingBar from '@/components/loadingBar'
+import LoadingBar from "@/components/loadingBar";
 import axios from "axios";
-
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -72,7 +72,7 @@ export default function DetailPage() {
   if (loading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
-        <LoadingBar/>
+        <LoadingBar />
       </Box>
     );
   }

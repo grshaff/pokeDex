@@ -1,6 +1,5 @@
-"use client";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import {Reveal} from "@/components/revealAnimation"
+import { Reveal } from "@/components/revealAnimation";
 import Link from "next/link";
 
 export default function NotFound() {
@@ -30,57 +29,59 @@ export default function NotFound() {
           }}
         >
           <Box>
-          <Reveal>
-            <Typography
-              component="h1"
-              sx={{
-                fontWeight: "700",
-                color: "primary.main",
-                fontSize: {
-                  xs: "1.4rem",
-                  sm: "2rem",
-                  md: "2.5rem",
-                  lg: "3.25rem",
-                },
-              }}
-            >
-              {" "}
-              404 | Page not Found
-            </Typography>
+            <Reveal>
+              <Typography
+                component="h1"
+                sx={{
+                  fontWeight: "700",
+                  color: "primary.main",
+                  fontSize: {
+                    xs: "1.4rem",
+                    sm: "2rem",
+                    md: "2.5rem",
+                    lg: "3.25rem",
+                  },
+                }}
+              >
+                {" "}
+                404 | Page not Found
+              </Typography>
             </Reveal>
             <Reveal>
-            <Typography
-              component="p"
-              sx={{
-                fontWeight: "400",
-                color: "primary.light",
-                fontSize: { xs: "", sm: "", md: "1rem", lg: "1.25rem" },
-                marginY: "25px",
-              }}
-            >
-              {" "}
-              It looks like the page you were trying to reach doesn't exist or has moved.
-            </Typography>
+              <Typography
+                component="p"
+                sx={{
+                  fontWeight: "400",
+                  color: "primary.light",
+                  fontSize: { xs: "", sm: "", md: "1rem", lg: "1.25rem" },
+                  marginY: "25px",
+                }}
+              >
+                {" "}
+                It looks like the page you were trying to reach doesn't exist or
+                has moved.
+              </Typography>
             </Reveal>
             <Box>
               <Reveal>
-                <Link href='/'>
-                <Typography borderBottom={1} color="primary.light">Click here to go home</Typography>
+                <Link href="/">
+                  <Typography borderBottom={1} color="primary.light">
+                    Click here to go home
+                  </Typography>
                 </Link>
-              
               </Reveal>
             </Box>
           </Box>
           {/* Pokemon image ^-^ */}
           <Reveal>
-          <Box
-            component="img"
-            src="/pokemon-notfound.webp"
-            alt="404 Page Not Found"
-            sx={{
-              width: { xs: "220px", sm: "280px", md: "384px", lg: "534px" },
-            }}
-          />
+            <Box
+              component="img"
+              src="/pokemon-notfound.webp"
+              alt="404 Page Not Found"
+              sx={{
+                width: { xs: "220px", sm: "280px", md: "384px", lg: "534px" },
+              }}
+            />
           </Reveal>
         </Stack>
       </Container>

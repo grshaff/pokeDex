@@ -1,4 +1,3 @@
-"use client";
 import { Card, CardContent, Skeleton } from "@mui/material";
 
 export default function SkeletonCard() {

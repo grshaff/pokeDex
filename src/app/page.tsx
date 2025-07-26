@@ -1,4 +1,3 @@
-"use client";
 import { useRef } from "react";
 import { Box } from "@mui/material";
 import LandingPage from "@/components/landingpage/landingPage";

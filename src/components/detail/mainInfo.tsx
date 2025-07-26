@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Container, Grid, Typography, Stack, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Link from "next/link";

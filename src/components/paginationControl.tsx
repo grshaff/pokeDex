@@ -1,5 +1,3 @@
-"use client";
-
 import theme from "@/lib/theme";
 import {
   Pagination,
@@ -59,7 +57,7 @@ export default function PaginationControl({
             borderColor: "white",
           },
           "& svg": {
-            color: "white", 
+            color: "white",
           },
           display: { xs: "none", md: "flex" },
         }}
