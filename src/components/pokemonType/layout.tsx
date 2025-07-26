@@ -1,30 +1,36 @@
-"use client"
-import { useState } from "react"
-import { Autocomplete, Box, Container, Divider, Stack, TextField, Typography } from "@mui/material"
-import TypeTable from "@/components/pokemonType/TypeTable"
-import { PokeTypes } from "@/types/pokemon-info"
-import type { Pokemon } from "@/types/pokemon"
-import {colors} from "@/types/pokemon-info"
+"use client";
+import { useState } from "react";
+import {
+  Autocomplete,
+  Box,
+  Container,
+  Divider,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import TypeTable from "@/components/pokemonType/TypeTable";
+import { PokeTypes } from "@/types/pokemon-info";
+import type { Pokemon } from "@/types/pokemon";
+import { colors } from "@/types/pokemon-info";
 
 interface PokeType {
-  name: string
+  name: string;
 }
 
 const getTypeGradient = (type: string) => {
-    return colors[type] || '#777';
-  };
+  return colors[type] || "#777";
+};
 
 export default function Layout() {
-  const [selectedTypes, setSelectedTypes] = useState<PokeType[]>([])
-  const [filteredPokemon, setFilteredPokemon] = useState<Pokemon[]>([])
+  const [selectedTypes, setSelectedTypes] = useState<PokeType[]>([]);
+  const [filteredPokemon, setFilteredPokemon] = useState<Pokemon[]>([]);
 
   const handleTypeChange = (event: any, newValue: PokeType[]) => {
-    setSelectedTypes(newValue)
-  }
+    setSelectedTypes(newValue);
+  };
 
-  
-
-  const types: any = selectedTypes.map(t => t.name); // e.g., ['fire', 'flying']
+  const types: any = selectedTypes.map((t) => t.name); // e.g., ['fire', 'flying']
   const gradientBorder1 = getTypeGradient(types[0]);
   const gradientBorder2 = getTypeGradient(types[1]);
   return (
@@ -61,23 +67,24 @@ export default function Layout() {
             left: -380,
             pointerEvents: "none",
             backgroundColor: "white",
-            border:types[1]? `180px solid ${gradientBorder2}`: `180px solid ${gradientBorder1}` ,
+            border: types[1]
+              ? `180px solid ${gradientBorder2}`
+              : `180px solid ${gradientBorder1}`,
             borderRadius: "50%",
           }}
         />
       </Box>
 
       {/* Main content */}
-      <Box sx={{ zIndex: 10, position: "relative"}}>
+      <Box sx={{ zIndex: 10, position: "relative" }}>
         <Container>
-          <Stack direction={{xs:"column", md:"row"}} spacing={3}>
-
+          <Stack direction={{ xs: "column", md: "row" }} spacing={3}>
             {/* Category select */}
             <Box width={"250px"}>
               <Typography variant="h6" color="primary.main" my={2}>
                 Pokemon Type
               </Typography>
-              <Autocomplete  
+              <Autocomplete
                 multiple
                 size="small"
                 id="pokemon-type-filter"
@@ -88,7 +95,11 @@ export default function Layout() {
                 value={selectedTypes}
                 onChange={handleTypeChange}
                 renderInput={(params) => (
-                  <TextField {...params} label="Filter by Types" placeholder="Select types..." />
+                  <TextField
+                    {...params}
+                    label="Filter by Types"
+                    placeholder="Select types..."
+                  />
                 )}
                 sx={{
                   "& .MuiOutlinedInput-root": {
@@ -107,5 +118,5 @@ export default function Layout() {
         </Container>
       </Box>
     </Box>
-  )
+  );
 }

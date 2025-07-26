@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { PokemonListResponse, Pokemon } from '@/types/pokemon';
+import axios from "axios";
+import { PokemonListResponse, Pokemon } from "@/types/pokemon";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
@@ -15,8 +15,10 @@ export const fetchPokemonList = async (
 };
 
 // Fetch Pokémon detail by name or full URL
-export const fetchPokemonDetail = async (urlOrName: string): Promise<Pokemon> => {
-  const isFullUrl = urlOrName.startsWith('http');
+export const fetchPokemonDetail = async (
+  urlOrName: string
+): Promise<Pokemon> => {
+  const isFullUrl = urlOrName.startsWith("http");
   const url = isFullUrl ? urlOrName : `${API_BASE}/pokemon/${urlOrName}`;
   const { data } = await axios.get<Pokemon>(url);
   return data;
@@ -34,7 +36,7 @@ export const fetchPokemonEvolutionChain = async (id: string): Promise<any> => {
   return data;
 };
 
-// Fetch Pokémon by type 
+// Fetch Pokémon by type
 export const fetchPokemonByType = async (type: string): Promise<any> => {
   try {
     const { data } = await axios.get(`${API_BASE}/type/${type.toLowerCase()}`);

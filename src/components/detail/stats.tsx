@@ -1,19 +1,13 @@
-'use client';
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-  Stack,
-} from '@mui/material';
-import { Pokemon } from '@/types/pokemon';
+"use client";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { Box, Container, Grid, Typography, Stack } from "@mui/material";
+import { Pokemon } from "@/types/pokemon";
 import CircularProgress, {
   circularProgressClasses,
-} from '@mui/material/CircularProgress';
-import { colors, EvolveColors } from '@/types/pokemon-info'; 
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+} from "@mui/material/CircularProgress";
+import { colors, EvolveColors } from "@/types/pokemon-info";
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 
 interface Props {
   data: Pokemon;
@@ -21,8 +15,9 @@ interface Props {
 }
 
 const getStatColor = (types: string[]) => {
-    const typeColors = types.map(type => colors[type] || '#777')
-    return typeColors;}
+  const typeColors = types.map((type) => colors[type] || "#777");
+  return typeColors;
+};
 
 export default function Stats({ data, evolutionChain }: Props) {
   const [progressValues, setProgressValues] = useState<number[]>(
@@ -51,45 +46,43 @@ export default function Stats({ data, evolutionChain }: Props) {
 
   function capitalizeFirstLetter(str: string): string {
     if (str.length === 0) {
-      return ""; 
+      return "";
     }
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  const types = data.stats.map(s => s.stat.name); // e.g., ['fire', 'flying']
-  const typesfiltered = types.map(str => str.replace('-',''));
+  const types = data.stats.map((s) => s.stat.name); // e.g., ['fire', 'flying']
+  const typesfiltered = types.map((str) => str.replace("-", ""));
   const statColor = getStatColor(typesfiltered);
 
-
   return (
-    <Box sx={{ backgroundColor: 'white', width: '100%', mb:10 }}>
-
-        {/* Stats */}
+    <Box sx={{ backgroundColor: "white", width: "100%", mb: 10 }}>
+      {/* Stats */}
       <Container
         maxWidth="xl"
         sx={{
           py: { xs: 4, sm: 2 },
-          px: { xs: 0, sm: 0, md: '70px', lg: '80px' },
+          px: { xs: 0, sm: 0, md: "70px", lg: "80px" },
         }}
       >
         <Grid
           container
           spacing={4}
-          alignItems={{ xs: 'center', md: 'start' }}
-          justifyContent={{ xs: 'center', md: 'start' }}
-          direction={'column'}
+          alignItems={{ xs: "center", md: "start" }}
+          justifyContent={{ xs: "center", md: "start" }}
+          direction={"column"}
           marginY={{ xs: 0, md: 0 }}
         >
-          <Stack direction={{ xs: 'row', md: 'column' }} spacing={4}>
+          <Stack direction={{ xs: "row", md: "column" }} spacing={4}>
             <Typography
               color="primary.main"
               fontWeight={700}
               fontSize={{
-                xs: '1rem',
-                sm: '1.2rem',
-                md: '1rem',
-                lg: '1.1rem',
-                xl: '1.4rem',
+                xs: "1rem",
+                sm: "1.2rem",
+                md: "1rem",
+                lg: "1.1rem",
+                xl: "1.4rem",
               }}
             >
               Stats:
@@ -98,29 +91,29 @@ export default function Stats({ data, evolutionChain }: Props) {
 
           {/* Stat Circles */}
           <Box
-            width={{ xs: '300px', sm: '500px', md: 'auto' }}
-            marginX={'auto'}
+            width={{ xs: "300px", sm: "500px", md: "auto" }}
+            marginX={"auto"}
           >
             <Grid
               container
               rowSpacing={{ xs: 1 }}
               columnSpacing={{ xs: 2 }}
               columns={{ xs: 1, sm: 2, md: 10 }}
-              sx={{ justifyContent: 'center', px: '10px' }}
+              sx={{ justifyContent: "center", px: "10px" }}
             >
               {data.stats.map((st, index) => (
                 <Grid key={index}>
-                  <Box sx={{ position: 'relative' }}>
+                  <Box sx={{ position: "relative" }}>
                     {/* Background Circle */}
                     <CircularProgress
                       variant="determinate"
                       sx={(theme) => ({
                         color: theme.palette.grey[200],
-                        ...theme.applyStyles?.('dark', {
+                        ...theme.applyStyles?.("dark", {
                           color: theme.palette.grey[800],
                         }),
                       })}
-                      size={'120px'}
+                      size={"120px"}
                       thickness={4}
                       value={100}
                     />
@@ -130,34 +123,36 @@ export default function Stats({ data, evolutionChain }: Props) {
                       disableShrink
                       sx={(theme) => ({
                         color: statColor[index],
-                        animationDuration: '550ms',
-                        position: 'absolute',
+                        animationDuration: "550ms",
+                        position: "absolute",
                         left: 0,
                         [`& .${circularProgressClasses.circle}`]: {
-                          strokeLinecap: 'round',
+                          strokeLinecap: "round",
                         },
-                        ...theme.applyStyles?.('dark', {
+                        ...theme.applyStyles?.("dark", {
                           color: statColor,
                         }),
                       })}
-                      size={'120px'}
+                      size={"120px"}
                       thickness={4}
                       value={progressValues[index]}
                     />
                     {/* Text inside circle */}
                     <Box
                       sx={{
-                        position: 'absolute',
-                        top: st.stat.name.length > 10 ? '20%':'27%',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        textAlign: 'center',
+                        position: "absolute",
+                        top: st.stat.name.length > 10 ? "20%" : "27%",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        textAlign: "center",
                       }}
                     >
-                      <Typography sx={{ fontSize: { xs: '1.3rem' }, m: 0 }}>
+                      <Typography sx={{ fontSize: { xs: "1.3rem" }, m: 0 }}>
                         {progressValues[index]}
                       </Typography>
-                      <Typography sx={{ fontSize: { xs: '0.8rem' }, m: 0 }}>{st.stat.name}</Typography>
+                      <Typography sx={{ fontSize: { xs: "0.8rem" }, m: 0 }}>
+                        {st.stat.name}
+                      </Typography>
                     </Box>
                   </Box>
                 </Grid>
@@ -167,33 +162,33 @@ export default function Stats({ data, evolutionChain }: Props) {
         </Grid>
       </Container>
 
-    {/* Evolution */}
+      {/* Evolution */}
       <Container
         maxWidth="xl"
         sx={{
           py: { xs: 0, sm: 2 },
-          px: { xs: 0, sm: 0, md: '70px', lg: '80px' },
-          pb:10
+          px: { xs: 0, sm: 0, md: "70px", lg: "80px" },
+          pb: 10,
         }}
       >
         <Grid
           container
           spacing={4}
-          alignItems={{ xs: 'center', md: 'start' }}
-          justifyContent={{ xs: 'center', md: 'start' }}
-          direction={'column'}
+          alignItems={{ xs: "center", md: "start" }}
+          justifyContent={{ xs: "center", md: "start" }}
+          direction={"column"}
           marginY={{ xs: 0, md: 0 }}
         >
-          <Stack direction={{ xs: 'row', md: 'column' }} spacing={4}>
+          <Stack direction={{ xs: "row", md: "column" }} spacing={4}>
             <Typography
               color="primary.main"
               fontWeight={700}
               fontSize={{
-                xs: '1rem',
-                sm: '1.2rem',
-                md: '1rem',
-                lg: '1.1rem',
-                xl: '1.4rem',
+                xs: "1rem",
+                sm: "1.2rem",
+                md: "1rem",
+                lg: "1.1rem",
+                xl: "1.4rem",
               }}
             >
               Evolution:
@@ -202,47 +197,68 @@ export default function Stats({ data, evolutionChain }: Props) {
 
           {/* Images */}
           <Box
-            width={{ xs: '300px', sm: '500px', md: 'auto' }}
-            marginX={'auto'}
+            width={{ xs: "300px", sm: "500px", md: "auto" }}
+            marginX={"auto"}
           >
             <Grid
               container
               rowSpacing={{ xs: 1 }}
-              columnSpacing={{ xs: 3, sm:1, md:2 }}
+              columnSpacing={{ xs: 3, sm: 1, md: 2 }}
               columns={{ xs: 1, sm: 2, md: 10 }}
-              sx={{ justifyContent: 'center', px: '10px', alignItems:'center' }}
+              sx={{
+                justifyContent: "center",
+                px: "10px",
+                alignItems: "center",
+              }}
             >
               {evolutionChain.map(([id, name, imgUrl], index) => (
                 <React.Fragment key={id}>
-                  <Box sx={{textAlign:'center', justifyContent:'center'}}>
-                  <Box
-                    component="img"
-                    src={imgUrl}
-                    alt={name}
-                    onClick={() => window.location.href = `/detail/${id}`}
-                    sx={{
-                      width: { xs: 130, sm:120, md: 140 },
-                      cursor: 'pointer',
-                      border: 8,
-                      borderRadius: '50%',
-                      borderColor: EvolveColors[index] || '#DE2C2C',
-                      p: 1,
-                      backgroundColor: 'white',
-                      '&:hover': { transform: 'scale(1.05)' },
-                      transition: 'transform 0.2s ease',
-                    }}
-                  />
-                  <Typography sx={{fontWeight:700, color:EvolveColors[index]}}>{capitalizeFirstLetter(name)}</Typography>
-                  {index < evolutionChain.length - 1 && (
-                    <DoubleArrowIcon sx={{color:EvolveColors[index+1]  ,fontSize:{xs:'60px',},display:{xs:'flex',sm:'none'}, transform: 'rotate(90deg)', mx:'auto'}}/>
-                  )}
+                  <Box sx={{ textAlign: "center", justifyContent: "center" }}>
+                    <Box
+                      component="img"
+                      src={imgUrl}
+                      alt={name}
+                      onClick={() => (window.location.href = `/detail/${id}`)}
+                      sx={{
+                        width: { xs: 130, sm: 120, md: 140 },
+                        cursor: "pointer",
+                        border: 8,
+                        borderRadius: "50%",
+                        borderColor: EvolveColors[index] || "#DE2C2C",
+                        p: 1,
+                        backgroundColor: "white",
+                        "&:hover": { transform: "scale(1.05)" },
+                        transition: "transform 0.2s ease",
+                      }}
+                    />
+                    <Typography
+                      sx={{ fontWeight: 700, color: EvolveColors[index] }}
+                    >
+                      {capitalizeFirstLetter(name)}
+                    </Typography>
+                    {index < evolutionChain.length - 1 && (
+                      <DoubleArrowIcon
+                        sx={{
+                          color: EvolveColors[index + 1],
+                          fontSize: { xs: "60px" },
+                          display: { xs: "flex", sm: "none" },
+                          transform: "rotate(90deg)",
+                          mx: "auto",
+                        }}
+                      />
+                    )}
                   </Box>
-                  
+
                   {index < evolutionChain.length - 1 && (
-                    <DoubleArrowIcon sx={{color:EvolveColors[index+1]  ,fontSize:{sm:'40px',md:'80px'}, mb:'20px',display:{xs:'none',sm:'flex'}}}/>
+                    <DoubleArrowIcon
+                      sx={{
+                        color: EvolveColors[index + 1],
+                        fontSize: { sm: "40px", md: "80px" },
+                        mb: "20px",
+                        display: { xs: "none", sm: "flex" },
+                      }}
+                    />
                   )}
-                  
-                  
                 </React.Fragment>
               ))}
             </Grid>

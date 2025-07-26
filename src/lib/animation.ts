@@ -1,4 +1,4 @@
-import { keyframes } from '@emotion/react';
+import { keyframes } from "@emotion/react";
 
 export const gradientMove = keyframes`
   0% { background-position: 0% 50%; }

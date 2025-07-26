@@ -1,21 +1,20 @@
 @import "tailwindcss";
 
-
 .main-wrapper {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    width: 100%;
-  }
-  
-  :root {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  :root::-webkit-scrollbar {
-    display: none;
-  }
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+:root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+:root::-webkit-scrollbar {
+  display: none;
+}

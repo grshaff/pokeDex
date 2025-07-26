@@ -1,31 +1,36 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { Container, Typography, CircularProgress, Box } from '@mui/material';
-import MainInfo from '@/components/detail/mainInfo';
-import OtherImages from '@/components/detail/otherImages';
-import Stats from '@/components/detail/stats';
-import { Pokemon } from '@/types/pokemon';
-import { fetchPokemonById, fetchPokemonEvolutionChain } from "@/services/pokeAPI";
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { Container, Typography, CircularProgress, Box } from "@mui/material";
+import MainInfo from "@/components/detail/mainInfo";
+import OtherImages from "@/components/detail/otherImages";
+import Stats from "@/components/detail/stats";
+import { Pokemon } from "@/types/pokemon";
+import {
+  fetchPokemonById,
+  fetchPokemonEvolutionChain,
+} from "@/services/pokeAPI";
+import axios from "axios";
 
 export default function DetailPage() {
   const { id } = useParams(); // get the ID from the route
   const [data, setData] = useState<Pokemon | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [evolutionChain, setEvolutionChain] = useState<[number, string, string][]>([]);
+  const [error, setError] = useState("");
+  const [evolutionChain, setEvolutionChain] = useState<
+    [number, string, string][]
+  >([]);
 
   const parseEvolutionChain = (chain: any): string[] => {
     const evoNames: string[] = [];
-  
+
     let current = chain;
     while (current) {
       evoNames.push(current.species.name);
       current = current.evolves_to?.[0];
     }
-  
+
     return evoNames;
   };
 
@@ -38,11 +43,11 @@ export default function DetailPage() {
         const speciesRes = await axios.get(response.species.url);
         const evolutionChainUrl = speciesRes.data.evolution_chain.url;
         const evolutionId = evolutionChainUrl.split("/").filter(Boolean).pop();
-        console.log(evolutionId)
+        console.log(evolutionId);
         const evoData = await fetchPokemonEvolutionChain(evolutionId);
-        console.log(evoData.chain)
+        console.log(evoData.chain);
         const evoNames = parseEvolutionChain(evoData.chain);
-        
+
         const evoWithImages = await Promise.all(
           evoNames.map(async (name): Promise<[number, string, string]> => {
             const pokemon = await fetchPokemonById(name);
@@ -64,7 +69,7 @@ export default function DetailPage() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
         <CircularProgress />
       </Box>
     );
@@ -83,14 +88,14 @@ export default function DetailPage() {
   if (!data) return null;
 
   const handleClose = () => {
-    return
-  }
+    return;
+  };
 
   return (
     <Container>
-      <MainInfo data={data} variant='page' onClick={handleClose}/>
-      <OtherImages data={data}/>
-      <Stats data={data} evolutionChain={evolutionChain}/>
+      <MainInfo data={data} variant="page" onClick={handleClose} />
+      <OtherImages data={data} />
+      <Stats data={data} evolutionChain={evolutionChain} />
     </Container>
   );
 }
