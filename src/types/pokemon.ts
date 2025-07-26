@@ -39,9 +39,10 @@ export interface PokemonListResponse {
         name:string;
       }
     }];
-    species:[{
+    species:{
       name:string;
       url:string
-    }]
+    };
+    chain:string,
   }
   
