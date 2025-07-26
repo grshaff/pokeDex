@@ -81,11 +81,7 @@ export default function Home() {
             </Box>
             <Divider orientation="vertical" flexItem />
             <Box>
-                <Typography variant="h1" color="initial">Pokemon Type 1</Typography>
-                <Typography variant="h1" color="initial">Pokemon Type 1</Typography>
-                <Typography variant="h1" color="initial">Pokemon Type 1</Typography>
-                <Typography variant="h1" color="initial">Pokemon Type 1</Typography>
-                <Typography variant="h1" color="initial">Pokemon Type 1</Typography>
+                <TypeTable/>
             </Box>
         </Stack>
         </Container>
