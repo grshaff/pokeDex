@@ -1,61 +1,56 @@
-"use client";
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { Box, Container, Grid, Typography, Stack } from "@mui/material";
-import { Pokemon } from "@/types/pokemon";
-import CircularProgress, {
-  circularProgressClasses,
-} from "@mui/material/CircularProgress";
-import { colors, EvolveColors } from "@/types/pokemon-info";
-import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
+"use client"
+import * as React from "react"
+import { useState, useEffect } from "react"
+import { Box, Container, Grid, Typography, Stack } from "@mui/material"
+import type { Pokemon } from "@/types/pokemon"
+import CircularProgress, { circularProgressClasses } from "@mui/material/CircularProgress"
+import { colors, EvolveColors } from "@/types/pokemon-info"
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow"
 
 interface Props {
-  data: Pokemon;
-  evolutionChain: [number, string, string][]; 
+  data: Pokemon
+  evolutionChain: [number, string, string][]
 }
 
+const OVERFLOW_COLOR = "#FFD700" 
 // convert stat name to hex color
 const getStatColor = (types: string[]) => {
-  const typeColors = types.map((type) => colors[type] || "#777");
-  return typeColors;
-};
+  const typeColors = types.map((type) => colors[type] || "#777")
+  return typeColors
+}
 
 export default function Stats({ data, evolutionChain }: Props) {
-  const [progressValues, setProgressValues] = useState<number[]>(
-    data.stats.map(() => 0) 
-  );
+  const [progressValues, setProgressValues] = useState<number[]>(data.stats.map(() => 0))
 
   useEffect(() => {
     const intervals = data.stats.map((st, index) => {
       return setInterval(() => {
         setProgressValues((prev) => {
-          const newValues = [...prev];
+          const newValues = [...prev]
           if (newValues[index] < st.base_stat) {
-            newValues[index] += 1;
+            newValues[index] += 1
           } else {
-            clearInterval(intervals[index]);
+            clearInterval(intervals[index])
           }
-          return newValues;
-        });
-      }, 15); 
-    });
-
+          return newValues
+        })
+      }, 15)
+    })
     return () => {
-      intervals.forEach((interval) => clearInterval(interval));
-    };
-  }, [data.stats]);
+      intervals.forEach((interval) => clearInterval(interval))
+    }
+  }, [data.stats])
 
-  // capital first word
+  // capital first word and replace hyphens
   function capitalizeFirstLetter(str: string): string {
     if (str.length === 0) {
-      return "";
+      return ""
     }
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1)
   }
 
-  const types = data.stats.map((s) => s.stat.name);
-  const typesfiltered = types.map((str) => str.replace("-", "")); //remove '-' so it the type can be compared
-  const statColor = getStatColor(typesfiltered);
+  const statNames = data.stats.map((s) => s.stat.name)
+  const statColors = getStatColor(statNames.map((str) => str.replace("-", ""))) // remove '-' for color mapping
 
   return (
     <Box sx={{ backgroundColor: "white", width: "100%", mb: 10 }}>
@@ -90,12 +85,8 @@ export default function Stats({ data, evolutionChain }: Props) {
               Stats:
             </Typography>
           </Stack>
-
           {/* Stat Circles */}
-          <Box
-            width={{ xs: "300px", sm: "500px", md: "auto" }}
-            marginX={"auto"}
-          >
+          <Box width={{ xs: "300px", sm: "500px", md: "auto" }} marginX={"auto"}>
             <Grid
               container
               rowSpacing={{ xs: 1 }}
@@ -106,7 +97,7 @@ export default function Stats({ data, evolutionChain }: Props) {
               {data.stats.map((st, index) => (
                 <Grid key={index}>
                   <Box sx={{ position: "relative" }}>
-                    {/* Background Circle */}
+                    {/* Background Circle (Grey) */}
                     <CircularProgress
                       variant="determinate"
                       sx={(theme) => ({
@@ -119,12 +110,12 @@ export default function Stats({ data, evolutionChain }: Props) {
                       thickness={4}
                       value={100}
                     />
-                    {/* Animated Progress */}
+                    {/* Primary Animated Progress (up to 100) */}
                     <CircularProgress
                       variant="determinate"
                       disableShrink
                       sx={(theme) => ({
-                        color: statColor[index],
+                        color: statColors[index],
                         animationDuration: "550ms",
                         position: "absolute",
                         left: 0,
@@ -132,13 +123,34 @@ export default function Stats({ data, evolutionChain }: Props) {
                           strokeLinecap: "round",
                         },
                         ...theme.applyStyles?.("dark", {
-                          color: statColor,
+                          color: statColors[index],
                         }),
                       })}
                       size={"120px"}
                       thickness={4}
-                      value={progressValues[index]}
+                      value={Math.min(progressValues[index], 100)} 
                     />
+                
+                    {st.base_stat > 100 && (
+                      <CircularProgress
+                        variant="determinate"
+                        disableShrink
+                        sx={{
+                          color: OVERFLOW_COLOR, 
+                          animationDuration: "550ms",
+                          position: "absolute",
+                          left: 0,
+                          
+                          bottom:7.5,
+                          [`& .${circularProgressClasses.circle}`]: {
+                            strokeLinecap: "round",
+                          },
+                        }}
+                        size={"120px"}
+                        thickness={5}
+                        value={Math.max(0, progressValues[index] - 100)} 
+                      />
+                    )}
                     {/* Text inside circle */}
                     <Box
                       sx={{
@@ -150,10 +162,10 @@ export default function Stats({ data, evolutionChain }: Props) {
                       }}
                     >
                       <Typography sx={{ fontSize: { xs: "1.3rem" }, m: 0 }}>
-                        {progressValues[index]}
+                        {progressValues[index]} {/* Display actual animated value */}
                       </Typography>
                       <Typography sx={{ fontSize: { xs: "0.8rem" }, m: 0 }}>
-                        {st.stat.name}
+                        {capitalizeFirstLetter(st.stat.name.replace("-", " "))} {/* Format stat name */}
                       </Typography>
                     </Box>
                   </Box>
@@ -163,7 +175,6 @@ export default function Stats({ data, evolutionChain }: Props) {
           </Box>
         </Grid>
       </Container>
-
       {/* Evolution */}
       <Container
         maxWidth="xl"
@@ -196,12 +207,8 @@ export default function Stats({ data, evolutionChain }: Props) {
               Evolution:
             </Typography>
           </Stack>
-
           {/* Images */}
-          <Box
-            width={{ xs: "300px", sm: "500px", md: "auto" }}
-            marginX={"auto"}
-          >
+          <Box width={{ xs: "300px", sm: "500px", md: "auto" }} marginX={"auto"}>
             <Grid
               container
               rowSpacing={{ xs: 1 }}
@@ -233,9 +240,7 @@ export default function Stats({ data, evolutionChain }: Props) {
                         transition: "transform 0.2s ease",
                       }}
                     />
-                    <Typography
-                      sx={{ fontWeight: 700, color: EvolveColors[index] }}
-                    >
+                    <Typography sx={{ fontWeight: 700, color: EvolveColors[index] }}>
                       {capitalizeFirstLetter(name)}
                     </Typography>
                     {index < evolutionChain.length - 1 && (
@@ -250,7 +255,6 @@ export default function Stats({ data, evolutionChain }: Props) {
                       />
                     )}
                   </Box>
-
                   {index < evolutionChain.length - 1 && (
                     <DoubleArrowIcon
                       sx={{
@@ -268,5 +272,5 @@ export default function Stats({ data, evolutionChain }: Props) {
         </Grid>
       </Container>
     </Box>
-  );
+  )
 }
