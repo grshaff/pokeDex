@@ -32,3 +32,34 @@ export const EvolveColors: Record<number, string> = {
   2: '#E66D00', // Third
   3: '#DE2C2C', // Fourth (or fallback)
 };
+
+export interface Types {
+  name: string;
+}
+
+export const PokeTypes: Types[] = [
+  { name: 'normal' },
+  { name: 'fire' },
+  { name: 'water' },
+  { name: 'electric' },
+  { name: 'grass' },
+  { name: 'ice' },
+  { name: 'fighting' },
+  { name: 'poison' },
+  { name: 'ground' },
+  { name: 'flying' },
+  { name: 'psychic' },
+  { name: 'bug' },
+  { name: 'rock' },
+  { name: 'ghost' },
+  { name: 'dragon' },
+  { name: 'dark' },
+  { name: 'steel' },
+  { name: 'fairy' },
+  { name: 'hp' },
+  { name: 'attack' },
+  { name: 'defense' },
+  { name: 'special-attack' },
+  { name: 'special-defense' },
+  { name: 'speed' },
+];

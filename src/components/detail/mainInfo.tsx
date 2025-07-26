@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Pokemon } from "@/types/pokemon";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { colors } from '@/types/pokemon-color'; 
+import { colors } from '@/types/pokemon-info'; 
 import { gradientMove } from '@/lib/animation';
 
 const getTypeGradient = (types: string[]) => {

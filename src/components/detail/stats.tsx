@@ -12,7 +12,7 @@ import { Pokemon } from '@/types/pokemon';
 import CircularProgress, {
   circularProgressClasses,
 } from '@mui/material/CircularProgress';
-import { colors, EvolveColors } from '@/types/pokemon-color'; 
+import { colors, EvolveColors } from '@/types/pokemon-info'; 
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
 interface Props {

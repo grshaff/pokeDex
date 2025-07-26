@@ -1,10 +1,15 @@
 "use client";
-import { Container, Typography } from "@mui/material";
+import { useRef } from 'react';
+import { Box} from "@mui/material";
+import Layout from '@/components/pokemonType/layout';
 
-export default function Detail() {
+
+export default function Home() {
+  
   return (
-    <Container>
-      <Typography> Hello ini tupe</Typography>
-    </Container>
+    <Box sx={{pt:10}}>
+    <Layout/>
+  </Box>
+    
   );
 }

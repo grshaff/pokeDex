@@ -1,7 +1,7 @@
 import { Modal, Box, Button } from "@mui/material";
 import { Pokemon } from "@/types/pokemon";
 import MainInfo from "@/components/detail/mainInfo";
-import { colors } from '@/types/pokemon-color'; // adjust path to your `colours` file
+import { colors } from '@/types/pokemon-info'; // adjust path to your `colours` file
 import { gradientMove } from '@/lib/animation';
 
 
