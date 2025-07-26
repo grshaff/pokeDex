@@ -45,7 +45,7 @@ export default function ResponsiveAppBar() {
                     disableUnderline
                     defaultValue={1}
                     inputProps={{
-                    name: 'age',
+                    name: 'language',
                     id: 'uncontrolled-native',
                     }}
                     sx={{
