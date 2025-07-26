@@ -35,36 +35,36 @@ A responsive web application built with Next.js and Material-UI that allows user
 To reproduce/run locally, follow these steps:
 
 1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/grshaff/pokeDex.git
-    cd pokeDex
-    ```  
+       ```bash
+       git clone https://github.com/grshaff/pokeDex.git
+       cd pokeDex
+       ```  
 
 2. **Install dependencies:**
   
-  ```shellscript
-  npm install
-  # or
-  yarn install
-  ```
+     ```shellscript
+     npm install
+     # or
+     yarn install
+     ```
 
 3. **Create a `.env.local` file:**
 In the root of the project, create file named `.env.local` and add environment variables. 
 
-```plaintext
-NEXT_PUBLIC_POKEMON_API_BASE_URL=https://pokeapi.co/api/v2
-```
+      ```plaintext
+      NEXT_PUBLIC_API_URL=https://pokeapi.co/api/v2
+      ```
 
 4. **Run dev server:**
 
-```shellscript
-npm run dev
-# or
-yarn dev
-```
+      ```shellscript
+      npm run dev
+      # or
+      yarn dev
+      ```
 
 5. **Open in browser:**
-`http://localhost:3000`.
+      `http://localhost:3000`.
 
 
 ## Future Improvements
