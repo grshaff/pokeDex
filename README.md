@@ -80,13 +80,13 @@ In the root of the project, create file named `.env.local` and add environment v
 
 ## ️ Time Spent
 
-This project was completed in approximately **48 hours** of focused development.
+This project was completed in approximately **~45 hours** of focused development.
 
-**Learning MaterialUI:** 2 hours
-**Initial setup (Next.js, MUI, basic routing):** 1 hours
-**Core data fetching & state management:** ~15 hours (fetching lists, details, handling loading)
-**Pages and components:** ~6 hours
-**Filtering & search logic (Type filter, Search bar, URL sync):** 12 hours
-**Refinements, Animations, Polish:** 5 hours
-**Code Review:** 1 hours
-**Total: ~45 hours**
+- **Learning MaterialUI:** 2 hours
+- **Initial setup (Next.js, MUI, basic routing):** 1 hours
+- **Core data fetching & state management:** ~15 hours (fetching lists, details, handling loading)
+- **Pages and components:** ~6 hours
+- **Filtering & search logic (Type filter, Search bar, URL sync):** 12 hours
+- **Refinements, Animations, Polish:** 5 hours
+- **Code Review:** 1 hours
+- **Total: ~45 hours**
