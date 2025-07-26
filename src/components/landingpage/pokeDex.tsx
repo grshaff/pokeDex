@@ -1,3 +1,4 @@
+"use client";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import PokeCard from "@/components/pokeCard";
 import { useEffect, useState } from "react";
@@ -91,7 +92,7 @@ export default function PokeDex() {
       ];
 
       setSearchResults(combinedResults);
-      setSearchLoading(false);
+      setSearchLoading(false); 
     };
 
     search();
@@ -160,22 +161,22 @@ export default function PokeDex() {
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Box sx={{ textAlign: "center" }}>
               <Reveal>
-                <Typography
-                  sx={{
-                    fontSize: "40px",
-                    fontWeight: 700,
-                    color: "primary.main",
-                  }}
-                >
-                  PokèDex
-                </Typography>
-                <Typography sx={{ color: "primary.main" }}>
-                  All Generation totaling <br />
-                  {totalPokemon} Pokemon
-                </Typography>
-                <SearchBar
-                  onSearchChange={(value: string) => setSearchQuery(value)}
-                />
+              <Typography
+                sx={{
+                  fontSize: "40px",
+                  fontWeight: 700,
+                  color: "primary.main",
+                }}
+              >
+                PokèDex
+              </Typography>
+              <Typography sx={{ color: "primary.main" }}>
+                All Generation totaling <br />
+                {totalPokemon} Pokemon
+              </Typography>
+              <SearchBar
+                onSearchChange={(value: string) => setSearchQuery(value)}
+              />
               </Reveal>
             </Box>
           </Box>
@@ -242,6 +243,7 @@ export default function PokeDex() {
                       cursor: "pointer",
                       transition: "transform 0.2s ease-in-out",
                     }}
+                    
                     onMouseOver={(e) =>
                       (e.currentTarget.style.transform = "scale(1.05)")
                     }
@@ -250,7 +252,7 @@ export default function PokeDex() {
                     }
                   >
                     <Reveal>
-                      <PokeCard data={pokemon} />
+                    <PokeCard data={pokemon} />
                     </Reveal>
                   </Box>
                 </Grid>

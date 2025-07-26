@@ -1,13 +1,6 @@
+"use client";
 import { useState } from "react";
-import {
-  Autocomplete,
-  Box,
-  Container,
-  Divider,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import {Autocomplete,Box,Container,Divider,Stack,TextField,Typography,} from "@mui/material";
 import TypeTable from "@/components/pokemonType/TypeTable";
 import { PokeTypes } from "@/types/pokemon-info";
 import { colors } from "@/types/pokemon-info";
