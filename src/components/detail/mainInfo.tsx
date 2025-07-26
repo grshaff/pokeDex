@@ -371,7 +371,7 @@ export default function MainInfo({ data, onClick, variant = "page" }: Props) {
                       </Typography>
                       <Stack direction="row" spacing={2}>
                         {data.types.map((t, i) => (
-                          <Link href={`/types/${t.type.name}`} key={i}>
+                          <Link href={`/pokemon-type?type=${t.type.name}`} key={i}>
                             <Box
                               component="img"
                               src={`/pokemon-types/type_${t.type.name}.webp`}
