@@ -3,7 +3,7 @@ import { PokemonListResponse, Pokemon } from "@/types/pokemon";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
-// Fetch list of Pokémon with pagination
+// Fetch list of Pokemon with pagination
 export const fetchPokemonList = async (
   limit: number,
   offset: number
@@ -14,7 +14,7 @@ export const fetchPokemonList = async (
   return data;
 };
 
-// Fetch Pokémon detail by name or full URL
+// Fetch Pokemon detail by name or full URL
 export const fetchPokemonDetail = async (
   urlOrName: string
 ): Promise<Pokemon> => {
@@ -24,7 +24,7 @@ export const fetchPokemonDetail = async (
   return data;
 };
 
-// Fetch Pokémon by ID
+// Fetch Pokemon by ID
 export const fetchPokemonById = async (id: string): Promise<Pokemon> => {
   const { data } = await axios.get<Pokemon>(`${API_BASE}/pokemon/${id}`);
   return data;
@@ -36,7 +36,7 @@ export const fetchPokemonEvolutionChain = async (id: string): Promise<any> => {
   return data;
 };
 
-// Fetch Pokémon by type
+// Fetch Pokemon by type
 export const fetchPokemonByType = async (type: string): Promise<any> => {
   try {
     const { data } = await axios.get(`${API_BASE}/type/${type.toLowerCase()}`);

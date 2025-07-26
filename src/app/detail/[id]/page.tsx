@@ -2,19 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { Container, Typography, CircularProgress, Box } from "@mui/material";
+import { Container, Typography, Box } from "@mui/material";
+import { Pokemon } from "@/types/pokemon";
+import {fetchPokemonById, fetchPokemonEvolutionChain} from "@/services/pokeAPI";
 import MainInfo from "@/components/detail/mainInfo";
 import OtherImages from "@/components/detail/otherImages";
 import Stats from "@/components/detail/stats";
-import { Pokemon } from "@/types/pokemon";
-import {
-  fetchPokemonById,
-  fetchPokemonEvolutionChain,
-} from "@/services/pokeAPI";
+import LoadingBar from '@/components/loadingBar'
 import axios from "axios";
 
+
 export default function DetailPage() {
-  const { id } = useParams(); // get the ID from the route
+  const { id } = useParams();
   const [data, setData] = useState<Pokemon | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -22,6 +21,7 @@ export default function DetailPage() {
     [number, string, string][]
   >([]);
 
+  // parse species name
   const parseEvolutionChain = (chain: any): string[] => {
     const evoNames: string[] = [];
 
@@ -34,6 +34,7 @@ export default function DetailPage() {
     return evoNames;
   };
 
+  // fetch pokemon evolution chain
   useEffect(() => {
     const getPokemonDetail = async () => {
       try {
@@ -67,14 +68,16 @@ export default function DetailPage() {
     if (id) getPokemonDetail();
   }, [id]);
 
+  // loading screen
   if (loading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
-        <CircularProgress />
+        <LoadingBar/>
       </Box>
     );
   }
 
+  // error handling
   if (error) {
     return (
       <Container sx={{ mt: 10 }}>

@@ -64,7 +64,7 @@ export default function PokeDex() {
       }
 
       setSearching(true);
-      setSearchLoading(true); // Start
+      setSearchLoading(true);
 
       const matchedByName = allPokemon.filter((poke) =>
         poke.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -92,7 +92,7 @@ export default function PokeDex() {
       ];
 
       setSearchResults(combinedResults);
-      setSearchLoading(false); // End
+      setSearchLoading(false); 
     };
 
     search();

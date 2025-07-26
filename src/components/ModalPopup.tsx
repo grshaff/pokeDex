@@ -1,7 +1,7 @@
 import { Modal, Box, Button } from "@mui/material";
 import { Pokemon } from "@/types/pokemon";
 import MainInfo from "@/components/detail/mainInfo";
-import { colors } from "@/types/pokemon-info"; // adjust path to your `colours` file
+import { colors } from "@/types/pokemon-info";
 import { gradientMove } from "@/lib/animation";
 
 const getTypeGradient = (types: string[]) => {
@@ -22,7 +22,7 @@ interface Props {
 export default function PokemonModal({ open, onClose, data }: Props) {
   if (!data) return null;
 
-  const types = data.types.map((t) => t.type.name); // e.g., ['fire', 'flying']
+  const types = data.types.map((t) => t.type.name); 
   const gradientBorder = getTypeGradient(types);
   return (
     <Modal open={open} onClose={onClose}>
@@ -36,7 +36,7 @@ export default function PokemonModal({ open, onClose, data }: Props) {
       >
         <Box
           sx={{
-            p: "4px", // thickness of border
+            p: "4px", 
             borderRadius: 2,
             background: gradientBorder,
             backgroundSize: "400% 400%",

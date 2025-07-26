@@ -23,8 +23,8 @@ export const Reveal = ({ children, width = "fit-content" }: Props) => {
       ref={ref}
       sx={{
         width,
-        overflow: "hidden", // prevent shadow artifacts
-        display: "inline-block", // or 'block' / 'flex' as needed
+        overflow: "hidden", 
+        display: "inline-block", 
       }}
     >
       <motion.div

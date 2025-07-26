@@ -59,7 +59,7 @@ export default function PaginationControl({
             borderColor: "white",
           },
           "& svg": {
-            color: "white", // icon color
+            color: "white", 
           },
           display: { xs: "none", md: "flex" },
         }}

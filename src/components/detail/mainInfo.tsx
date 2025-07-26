@@ -9,6 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { colors } from "@/types/pokemon-info";
 import { gradientMove } from "@/lib/animation";
 
+// get hex color based on pokemon ypes
 const getTypeGradient = (types: string[]) => {
   const typeColors = types.map((type) => colors[type] || "#777");
   if (typeColors.length < 2) {
@@ -41,7 +42,7 @@ export default function MainInfo({ data, onClick, variant = "page" }: Props) {
   }
   const pokemonName: string = capitalizeFirstLetter(data.name);
 
-  const types = data.types.map((t) => t.type.name); // e.g., ['fire', 'flying']
+  const types = data.types.map((t) => t.type.name);
   const gradientBorder = getTypeGradient(types);
 
   return (

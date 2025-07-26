@@ -23,7 +23,6 @@ const theme = createTheme({
   typography: {
     fontFamily: "Poppins, sans-serif",
   },
-  // optionally override component defaults
   components: {
     MuiCssBaseline: {
       styleOverrides: {

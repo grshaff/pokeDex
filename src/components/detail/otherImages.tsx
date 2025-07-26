@@ -1,15 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-  Stack,
-  Dialog,
-  DialogContent,
-} from "@mui/material";
+import {Box, Container, Grid, Typography, Stack, Dialog, DialogContent} from "@mui/material";
 import { Pokemon } from "@/types/pokemon";
 
 interface Props {
@@ -32,9 +24,9 @@ export default function OtherImages({ data }: Props) {
 
   const spriteEntries = Object.entries(data.sprites)
     .filter(
-      ([key, url]) => typeof url === "string" && url && !key.includes("_female")
+      ([key, url]) => typeof url === "string" && url && !key.includes("_female") // filter out the female image bcoz its just a duplicate
     )
-    .slice(0, 10); // optional: limit how many you show
+    .slice(0, 10);
   console.log(spriteEntries);
 
   return (
@@ -116,7 +108,7 @@ export default function OtherImages({ data }: Props) {
         </Grid>
       </Container>
 
-      {/* Image Pop-up Dialog */}
+      {/* Image Pop-up fullscreen */}
       <Dialog open={open} onClose={handleClose} maxWidth="lg">
         <DialogContent
           sx={{

@@ -59,7 +59,6 @@ export default function ResponsiveAppBar() {
                     }}
                 >
                     <option value={1}>English</option>
-                    <option value={2}>Bahasa</option>
                 </NativeSelect>
             </FormControl>
                 <LanguageIcon sx={{ my:'auto' ,mr:{xs:'6px', sm:'8px'}, width:{xs:'16px',sm:'18px'}}}/>

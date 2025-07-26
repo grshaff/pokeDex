@@ -29,7 +29,7 @@ export const EvolveColors: Record<number, string> = {
   0: "#01B956", // First evolution
   1: "#E6AB09", // Second
   2: "#E66D00", // Third
-  3: "#DE2C2C", // Fourth (or fallback)
+  3: "#DE2C2C", // Fourth 
 };
 
 export interface Types {

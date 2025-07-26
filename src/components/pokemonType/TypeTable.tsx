@@ -73,9 +73,9 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
           allPokemonUrls = [...new Set(allPokemonUrls)];
         }
 
-        // ⚠️ Simulate network delay per Pokémon fetch (e.g., 200ms each)
+        // add delay when fetching
         const pokemonPromises = allPokemonUrls.map(async (url) => {
-          await delay(200); // Simulated delay
+          await delay(10);
           return fetchPokemonDetail(url);
         });
 
@@ -158,10 +158,16 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
                 {selectedTypes.length > 1 ? "s" : ""}
               </Typography>
               <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-                Found {pokemonList.length} Pokemon
-                {selectedTypes.length > 1
-                  ? " with all selected types"
-                  : ` of ${selectedTypes[0]?.name} type`}
+                {loading ? (
+                  <CircularProgress size={0} sx={{ ml: 1 }} />
+                ) : (
+                  <>
+                    Found {pokemonList.length} Pokémon
+                    {selectedTypes.length > 1
+                      ? " with all selected types"
+                      : ` of ${selectedTypes[0]?.name} type`}
+                  </>
+                )}
               </Typography>
             </Box>
           </Box>
@@ -195,7 +201,7 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
                     }}
                   >
                     <Reveal width="100%">
-                    <PokeCard data={pokemon} variant="table" />
+                      <PokeCard data={pokemon} variant="table" />
                     </Reveal>
                   </Box>
                 ))

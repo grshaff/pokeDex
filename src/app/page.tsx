@@ -7,6 +7,7 @@ import PokeDex from "@/components/landingpage/pokeDex";
 export default function Home() {
   const pokedexRef = useRef<HTMLDivElement>(null);
 
+  // handle scroll to pokedex view when button scroll
   const scrollToPokedex = () => {
     pokedexRef.current?.scrollIntoView({ behavior: "smooth" });
   };

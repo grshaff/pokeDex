@@ -11,9 +11,10 @@ import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 
 interface Props {
   data: Pokemon;
-  evolutionChain: [number, string, string][]; // [id, name, image]
+  evolutionChain: [number, string, string][]; 
 }
 
+// convert stat name to hex color
 const getStatColor = (types: string[]) => {
   const typeColors = types.map((type) => colors[type] || "#777");
   return typeColors;
@@ -21,7 +22,7 @@ const getStatColor = (types: string[]) => {
 
 export default function Stats({ data, evolutionChain }: Props) {
   const [progressValues, setProgressValues] = useState<number[]>(
-    data.stats.map(() => 0) // initialize all progress to 0
+    data.stats.map(() => 0) 
   );
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function Stats({ data, evolutionChain }: Props) {
           }
           return newValues;
         });
-      }, 15); // control speed
+      }, 15); 
     });
 
     return () => {
@@ -44,6 +45,7 @@ export default function Stats({ data, evolutionChain }: Props) {
     };
   }, [data.stats]);
 
+  // capital first word
   function capitalizeFirstLetter(str: string): string {
     if (str.length === 0) {
       return "";
@@ -51,8 +53,8 @@ export default function Stats({ data, evolutionChain }: Props) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  const types = data.stats.map((s) => s.stat.name); // e.g., ['fire', 'flying']
-  const typesfiltered = types.map((str) => str.replace("-", ""));
+  const types = data.stats.map((s) => s.stat.name);
+  const typesfiltered = types.map((str) => str.replace("-", "")); //remove '-' so it the type can be compared
   const statColor = getStatColor(typesfiltered);
 
   return (

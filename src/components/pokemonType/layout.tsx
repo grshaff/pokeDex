@@ -1,19 +1,9 @@
 "use client";
 import { useState } from "react";
-import {
-  Autocomplete,
-  Box,
-  Container,
-  Divider,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import {Autocomplete,Box,Container,Divider,Stack,TextField,Typography,} from "@mui/material";
 import TypeTable from "@/components/pokemonType/TypeTable";
 import { PokeTypes } from "@/types/pokemon-info";
-import type { Pokemon } from "@/types/pokemon";
 import { colors } from "@/types/pokemon-info";
-import { Reveal } from "../revealAnimation";
 
 interface PokeType {
   name: string;
@@ -25,13 +15,13 @@ const getTypeGradient = (type: string) => {
 
 export default function Layout() {
   const [selectedTypes, setSelectedTypes] = useState<PokeType[]>([]);
-  const [filteredPokemon, setFilteredPokemon] = useState<Pokemon[]>([]);
 
   const handleTypeChange = (event: any, newValue: PokeType[]) => {
     setSelectedTypes(newValue);
   };
 
-  const types: any = selectedTypes.map((t) => t.name); // e.g., ['fire', 'flying']
+  // to change the backround image component based on selected type filter
+  const types: any = selectedTypes.map((t) => t.name);
   const gradientBorder1 = getTypeGradient(types[0]);
   const gradientBorder2 = getTypeGradient(types[1]);
   return (
