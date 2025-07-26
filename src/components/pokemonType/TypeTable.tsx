@@ -6,6 +6,7 @@ import { fetchPokemonByType, fetchPokemonDetail } from "@/services/pokeAPI"
 import type { Pokemon } from "@/types/pokemon"
 import PaginationControl from "@/components/paginationControl"
 import PokemonModal from "@/components/ModalPopup"
+import LoadingBar from "@/components/loadingBar"
 
 interface PokeType {
   name: string
@@ -35,7 +36,10 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
     setOpenModal(false)
   }
 
+  
   useEffect(() => {
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+  
     const fetchPokemonByTypes = async () => {
       if (selectedTypes.length === 0) {
         setPokemonList([]);
@@ -44,18 +48,15 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
   
       setLoading(true);
       try {
-        // Fetch Pokémon for each selected type (by type name)
         const typePromises = selectedTypes.map((type) => fetchPokemonByType(type.name));
         const typeResults = await Promise.all(typePromises);
   
-        // Collect all Pokémon URLs from each type result
         let allPokemonUrls: string[] = [];
         typeResults.forEach((typeData) => {
           const pokemonUrls = typeData.pokemon.map((p: any) => p.pokemon.url);
           allPokemonUrls = [...allPokemonUrls, ...pokemonUrls];
         });
   
-        // If multiple types are selected, find Pokémon that have ALL selected types
         if (selectedTypes.length > 1) {
           const urlCounts: { [key: string]: number } = {};
           allPokemonUrls.forEach((url) => {
@@ -69,11 +70,14 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
           allPokemonUrls = [...new Set(allPokemonUrls)];
         }
   
-        // Fetch detailed Pokémon data by URL
-        const pokemonPromises = allPokemonUrls.map((url) => fetchPokemonDetail(url));
+        // ⚠️ Simulate network delay per Pokémon fetch (e.g., 200ms each)
+        const pokemonPromises = allPokemonUrls.map(async (url) => {
+          await delay(200); // Simulated delay
+          return fetchPokemonDetail(url);
+        });
+  
         const detailedPokemon = await Promise.all(pokemonPromises);
   
-        // Sort by ID
         const sortedPokemon = detailedPokemon.sort((a, b) => a.id - b.id);
         setPokemonList(sortedPokemon);
       } catch (error) {
@@ -85,8 +89,9 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
     };
   
     fetchPokemonByTypes();
-    setPage(1); // Reset pagination
+    setPage(1);
   }, [selectedTypes]);
+  
   
 
   // Pagination logic
@@ -153,9 +158,7 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
         </Container>
 
         {loading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
-            <CircularProgress size={60} />
-          </Box>
+          <LoadingBar/>
         ) : (
           <>
 
