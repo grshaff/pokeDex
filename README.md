@@ -1,41 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### Hello, Thanks for coming. <br>this README.md shows detailed information about this project, enjoy and have a great day!
 
-## Getting Started
+# Pokémon Dex
 
-` npm install @mui/material @emotion/react @emotion/styled `
-` npm install @mui/icons-material `
-` npm install @fontsource/poppins`
-` npm install @mui/material `
+A responsive web application built with Next.js and Material-UI that allows users to explore Pokémon, filter them by types, search by name, and view detailed statistics and evolution chains.
 
-First, run the development server:
+## Deployment Link
 
-```bash
+[PokeDex by grshaff](https://pokedex-grshaff.vercel.app)
+
+## Features Implemented
+
+*   **Pokémon Data Fetching:** Fetches and displays Pokémon data from the PokeAPI.
+*   **Type-Based Filtering:** Filter Pokemon by one or multiple types.
+*   **Search Functionality:** Search Pokemon by name.
+*   **Pagination:** Page index to browse through large lists of Pokémon.
+*   **Responsive Design:** Can be used from phone to pc browser
+*   **Interactive UI:** Border animation and background changes based on types selected (on pokemon type)
+*   **Loading screen:** Using delay when fetching data and shows skeleton or loading animation
+
+## Technical Decisions
+
+*   **Styling:** Custom color mapping for Pokémon types and evolution stages for a visually engaging experience.
+*   **Data Fetching:**
+    *   Directly consumes the [PokeAPI](https://pokeapi.co/) using `fetch` for all data retrieval.
+    *   Asynchronous operations (`async/await`, `Promise.all`, `axios`) are used to efficiently fetch multiple Pokémon details or type-specific data.
+    *   Environment variables (`.env.local` and Vercel environment variables) are used to manage API base URLs, following best practices for security and configurability.
+*   **State Management:** Using useState` and `useEffect` hooks for local component state and side effects (like data fetching and animation control).
+*   **Responsive Design Strategy:**
+    *   Combines MUI's breakpoint system with percentage-based widths and `min-width`/`max-width` properties to ensure components scale fluidly rather than jumping between fixed sizes.
+    *   Flexible Box (Flexbox) layouts are extensively used for dynamic content arrangement.
+
+## Setup Instructions
+
+To reproduce/run locally, follow these steps:
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/grshaff/pokeDex.git
+    cd pokeDex
+    ```  
+
+2. **Install dependencies:**
+  
+  ```shellscript
+  npm install
+  # or
+  yarn install
+  ```
+
+3. **Create a `.env.local` file:**
+In the root of the project, create file named `.env.local` and add environment variables. 
+
+```plaintext
+NEXT_PUBLIC_POKEMON_API_BASE_URL=https://pokeapi.co/api/v2
+```
+
+4. **Run dev server:**
+
+```shellscript
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. **Open in browser:**
+`http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Future Improvements
 
-## Learn More
+- **Sorting Options:** Implement sorting for Pokémon lists (e.g., by ID, name, or specific stats).
+- **Advanced Filters:** Add more filtering options (e.g., by generation, abilities, or specific stat ranges).
+- **Search Autocomplete:** Enhance the search bar with real-time suggestions.
+- **Accessibility Enhancements:** Further improve ARIA attributes and keyboard navigation.
+- **Performance Optimization:** Explore image optimization techniques and data caching strategies.
+- **Theming:** Implement a full dark mode or custom theme switcher.
+- **Language:**: Add more language to support global users
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ️ Time Spent
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project was completed in approximately **48 hours** of focused development.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Learning MaterialUI:** 2 hours
+**Initial setup (Next.js, MUI, basic routing):** 1 hours
+**Core data fetching & state management:** ~15 hours (fetching lists, details, handling loading)
+**Pages and components:** ~6 hours
+**Filtering & search logic (Type filter, Search bar, URL sync):** 12 hours
+**Refinements, Animations, Polish:** 5 hours
+**Code Review:** 1 hours
+**Total: ~45 hours**
