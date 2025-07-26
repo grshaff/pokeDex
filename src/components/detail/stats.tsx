@@ -12,7 +12,7 @@ import { Pokemon } from '@/types/pokemon';
 import CircularProgress, {
   circularProgressClasses,
 } from '@mui/material/CircularProgress';
-import { colors } from '@/types/pokemon-color'; 
+import { colors, EvolveColors } from '@/types/pokemon-color'; 
 
 interface Props {
   data: Pokemon;
@@ -48,6 +48,12 @@ export default function Stats({ data, evolutionChain }: Props) {
     };
   }, [data.stats]);
 
+  function capitalizeFirstLetter(str: string): string {
+    if (str.length === 0) {
+      return ""; 
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
   const types = data.stats.map(s => s.stat.name); // e.g., ['fire', 'flying']
   const typesfiltered = types.map(str => str.replace('-',''));
@@ -215,15 +221,16 @@ export default function Stats({ data, evolutionChain }: Props) {
                     sx={{
                       width: { xs: 80, sm: 100, md: 120 },
                       cursor: 'pointer',
-                      border: 2,
+                      border: 8,
                       borderRadius: '50%',
+                      borderColor: EvolveColors[index] || '#DE2C2C',
                       p: 1,
                       backgroundColor: 'white',
                       '&:hover': { transform: 'scale(1.05)' },
                       transition: 'transform 0.2s ease',
                     }}
                   />
-                  <Typography>{name}</Typography>
+                  <Typography>{capitalizeFirstLetter(name)}</Typography>
                   </Box>
                   
                   {index < evolutionChain.length - 1 && (

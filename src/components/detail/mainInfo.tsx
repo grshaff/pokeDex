@@ -169,7 +169,7 @@ export default function MainInfo({ data, onClick, variant = 'page' }: Props) {
                       lg: '1.1rem',
                       xl: '1.3rem',
                      }}>
-                      • {ab.ability.name}
+                      • {capitalizeFirstLetter(ab.ability.name)}
                     </Typography>
                   ))}
                 </Stack>

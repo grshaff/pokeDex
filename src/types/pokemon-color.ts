@@ -23,4 +23,12 @@ export const colors: Record<string, string> = {
   specialattack:'#353951',
   specialdefense:'#54a666',
   speed:'#fc6898',
+  
+};
+
+export const EvolveColors: Record<number, string> = {
+  0: '#01B956', // First evolution
+  1: '#E6AB09', // Second
+  2: '#E66D00', // Third
+  3: '#DE2C2C', // Fourth (or fallback)
 };
