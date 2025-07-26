@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body>
         <ThemeRegistry>
-        <Box sx={{ position: 'sticky', top: 0, zIndex: 1000, bgcolor: 'background.paper', paddingBottom:{xs:'64px', sm:'80px'} }}>
+        <Box sx={{  top: 0, zIndex: 1000, bgcolor: 'background.paper', paddingBottom:{xs:'64px', sm:'80px'} }}>
           <Navbar />
         </Box>
           <main className=".main-wrapper">{children}</main>

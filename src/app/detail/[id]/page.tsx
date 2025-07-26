@@ -7,7 +7,7 @@ import MainInfo from '@/components/detail/mainInfo';
 import OtherImages from '@/components/detail/otherImages';
 import Stats from '@/components/detail/stats';
 import { Pokemon } from '@/types/pokemon';
-import { fetchPokemon, fetchPokemonEvolution } from "@/services/pokeAPI";
+import { fetchPokemonById, fetchPokemonEvolutionChain } from "@/services/pokeAPI";
 import axios from 'axios';
 
 export default function DetailPage() {
@@ -32,20 +32,20 @@ export default function DetailPage() {
   useEffect(() => {
     const getPokemonDetail = async () => {
       try {
-        const response = await fetchPokemon(`${id}`);
+        const response = await fetchPokemonById(`${id}`);
         setData(response);
 
         const speciesRes = await axios.get(response.species.url);
         const evolutionChainUrl = speciesRes.data.evolution_chain.url;
         const evolutionId = evolutionChainUrl.split("/").filter(Boolean).pop();
         console.log(evolutionId)
-        const evoData = await fetchPokemonEvolution(evolutionId);
+        const evoData = await fetchPokemonEvolutionChain(evolutionId);
         console.log(evoData.chain)
         const evoNames = parseEvolutionChain(evoData.chain);
         
         const evoWithImages = await Promise.all(
           evoNames.map(async (name): Promise<[number, string, string]> => {
-            const pokemon = await fetchPokemon(name);
+            const pokemon = await fetchPokemonById(name);
             return [pokemon.id, name, pokemon.sprites.front_default];
           })
         );

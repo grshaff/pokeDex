@@ -1,95 +1,25 @@
 "use client"
-import { Box, Container, Typography } from "@mui/material"
+import { Box, Container, Typography, CircularProgress } from "@mui/material"
 import PokeCard from "@/components/pokeCard"
 import { useEffect, useState } from "react"
-import { fetchPokemonList, fetchPokemonDetail } from "@/services/pokeAPI"
+import { fetchPokemonByType, fetchPokemonDetail } from "@/services/pokeAPI"
 import type { Pokemon } from "@/types/pokemon"
 import PaginationControl from "@/components/paginationControl"
-import SkeletonCard from "@/components/skeletonCard"
 import PokemonModal from "@/components/ModalPopup"
 
-export default function PokeDex() {
-  // Load pokemon list
+interface PokeType {
+  name: string
+}
+
+interface TypeTableProps {
+  selectedTypes: PokeType[]
+}
+
+export default function TypeTable({ selectedTypes }: TypeTableProps) {
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([])
+  const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(9)
-  const [total, setTotal] = useState(0)
-
-  useEffect(() => {
-    const getData = async () => {
-      setLoading(true)
-      const offset = (page - 1) * limit
-      const listData = await fetchPokemonList(limit, offset)
-      setTotal(Math.ceil(listData.count / limit))
-
-      const detailPromises = listData.results.map((poke) => fetchPokemonDetail(poke.url))
-      const detailedPokemon = await Promise.all(detailPromises)
-      setPokemonList(detailedPokemon)
-      setLoading(false)
-    }
-
-    getData()
-  }, [page, limit])
-
-  // Searchbar to search pokemon by name or id
-  const [searchQuery, setSearchQuery] = useState("")
-  const filteredPokemon = pokemonList.filter((pokemon) =>
-    pokemon.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  )
-
-  const [allPokemon, setAllPokemon] = useState<{ name: string; url: string }[]>([])
-  const [searching, setSearching] = useState(false)
-  const [searchResults, setSearchResults] = useState<Pokemon[]>([])
-
-  useEffect(() => {
-    const getAllPokemonNames = async () => {
-      const listData = await fetchPokemonList(1035, 0)
-      setAllPokemon(listData.results)
-    }
-    getAllPokemonNames()
-  }, [])
-
-  useEffect(() => {
-    const search = async () => {
-      if (searchQuery === "") {
-        setSearching(false)
-        setSearchResults([])
-        return
-      }
-
-      setSearching(true)
-      setSearchLoading(true)
-
-      const matchedByName = allPokemon.filter((poke) => poke.name.toLowerCase().includes(searchQuery.toLowerCase()))
-
-      let matchedById: Pokemon[] = []
-      if (!isNaN(Number(searchQuery))) {
-        try {
-          const pokeById = await fetchPokemonDetail(`${searchQuery}`)
-          matchedById = [pokeById]
-        } catch (error) {
-          // Handle error
-        }
-      }
-
-      const urls = new Set(matchedByName.map((p) => p.url))
-      const detailPromises = matchedByName.map((p) => fetchPokemonDetail(p.url))
-      const resultsByName = await Promise.all(detailPromises)
-
-      const combinedResults = [
-        ...matchedById,
-        ...resultsByName.filter((p) => !matchedById.find((mp) => mp.id === p.id)),
-      ]
-
-      setSearchResults(combinedResults)
-      setSearchLoading(false)
-    }
-
-    search()
-  }, [searchQuery, allPokemon])
-
-  const [loading, setLoading] = useState(true)
-  const [searchLoading, setSearchLoading] = useState(false)
+  const [limit, setLimit] = useState(10)
 
   // Modal popup
   const [openModal, setOpenModal] = useState(false)
@@ -105,10 +35,92 @@ export default function PokeDex() {
     setOpenModal(false)
   }
 
+  useEffect(() => {
+    const fetchPokemonByTypes = async () => {
+      if (selectedTypes.length === 0) {
+        setPokemonList([]);
+        return;
+      }
+  
+      setLoading(true);
+      try {
+        // Fetch Pokémon for each selected type (by type name)
+        const typePromises = selectedTypes.map((type) => fetchPokemonByType(type.name));
+        const typeResults = await Promise.all(typePromises);
+  
+        // Collect all Pokémon URLs from each type result
+        let allPokemonUrls: string[] = [];
+        typeResults.forEach((typeData) => {
+          const pokemonUrls = typeData.pokemon.map((p: any) => p.pokemon.url);
+          allPokemonUrls = [...allPokemonUrls, ...pokemonUrls];
+        });
+  
+        // If multiple types are selected, find Pokémon that have ALL selected types
+        if (selectedTypes.length > 1) {
+          const urlCounts: { [key: string]: number } = {};
+          allPokemonUrls.forEach((url) => {
+            urlCounts[url] = (urlCounts[url] || 0) + 1;
+          });
+  
+          allPokemonUrls = Object.keys(urlCounts).filter(
+            (url) => urlCounts[url] === selectedTypes.length
+          );
+        } else {
+          allPokemonUrls = [...new Set(allPokemonUrls)];
+        }
+  
+        // Fetch detailed Pokémon data by URL
+        const pokemonPromises = allPokemonUrls.map((url) => fetchPokemonDetail(url));
+        const detailedPokemon = await Promise.all(pokemonPromises);
+  
+        // Sort by ID
+        const sortedPokemon = detailedPokemon.sort((a, b) => a.id - b.id);
+        setPokemonList(sortedPokemon);
+      } catch (error) {
+        console.error("Error fetching Pokémon by types:", error);
+        setPokemonList([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchPokemonByTypes();
+    setPage(1); // Reset pagination
+  }, [selectedTypes]);
+  
+
+  // Pagination logic
+  const startIndex = (page - 1) * limit
+  const endIndex = startIndex + limit
+  const paginatedPokemon = pokemonList.slice(startIndex, endIndex)
+  const totalPages = Math.ceil(pokemonList.length / limit)
+
+  if (selectedTypes.length === 0) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "400px",
+          textAlign: "center",
+        }}
+      >
+        <Typography variant="h5" color="text.secondary" gutterBottom>
+          Select Pokemon Types
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          Choose one or more types from the filter to see Pokemon of those types
+        </Typography>
+      </Box>
+    )
+  }
+
   return (
     <Box
       sx={{
-        width: "800px",
+        width: "100%",
         position: "relative",
         backgroundColor: "hsla(0, 0%, 100%, 0.8)",
         minHeight: "100vh",
@@ -123,72 +135,74 @@ export default function PokeDex() {
           zIndex: 1,
         }}
       >
-        <Container sx={{ py: "80px" }}>
-          <Box sx={{ display: "flex", justifyContent: "start" }}>
+        <Container sx={{ py: 4 }}>
+          <Box sx={{ display: "flex", justifyContent: "start", mb: 4 }}>
             <Box sx={{ textAlign: "start" }}>
-              <Typography sx={{ fontSize: "40px", fontWeight: 700, color: "primary.main" }}>
-                Pokèmon with Type
+              <Typography sx={{ fontSize: "32px", fontWeight: 700, color: "primary.main" }}>
+                Pokemon with {selectedTypes.map((type) => type.name).join(" + ")} Type
+                {selectedTypes.length > 1 ? "s" : ""}
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
+                Found {pokemonList.length} Pokemon
+                {selectedTypes.length > 1 ? " with all selected types" : ` of ${selectedTypes[0]?.name} type`}
               </Typography>
             </Box>
           </Box>
         </Container>
 
-        {/* Table Header */}
+        {loading ? (
+          <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
+            <CircularProgress size={60} />
+          </Box>
+        ) : (
+          <>
 
-        {/* PokeCards */}
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
-          {searching ? (
-            searchLoading ? (
-              Array.from({ length: 6 }).map((_, idx) => <SkeletonCard key={idx} />)
-            ) : searchResults.length > 0 ? (
-              searchResults.map((pokemon) => (
-                <Box key={pokemon.id} onClick={() => handleOpen(pokemon)} sx={{ cursor: "pointer" }}>
-                  <PokeCard data={pokemon} variant="table" />
-                </Box>
-              ))
-            ) : (
-              <Typography sx={{ textAlign: "center", width: "100%", mt: 4, fontWeight: 600 }}>
-                No Pokémon match your search.
-              </Typography>
-            )
-          ) : loading ? (
-            Array.from({ length: 9 }).map((_, idx) => <SkeletonCard key={idx} />)
-          ) : (
-            pokemonList.map((pokemon) => (
-              <Box
-                key={pokemon.id}
-                onClick={() => handleOpen(pokemon)}
-                sx={{
-                  cursor: "pointer",
-                  transition: "transform 0.2s ease-in-out",
-                  "&:hover": {
-                    transform: "scale(1.02)",
-                  },
-                }}
-              >
-                <PokeCard data={pokemon} variant="table" />
+            {/* Pokemon Cards */}
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
+              {paginatedPokemon.length > 0 ? (
+                paginatedPokemon.map((pokemon) => (
+                  <Box
+                    key={pokemon.id}
+                    onClick={() => handleOpen(pokemon)}
+                    sx={{
+                      cursor: "pointer",
+                      transition: "transform 0.2s ease-in-out",
+                      "&:hover": {
+                        transform: "scale(1.02)",
+                      },
+                    }}
+                  >
+                    <PokeCard data={pokemon} variant="table" />
+                  </Box>
+                ))
+              ) : (
+                <Typography sx={{ textAlign: "center", width: "100%", mt: 4, fontWeight: 600 }}>
+                  No Pokemon found with the selected type combination.
+                </Typography>
+              )}
+            </Box>
+
+            {/* Pagination */}
+            {pokemonList.length > limit && (
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+                <PaginationControl
+                  count={totalPages}
+                  page={page}
+                  onPageChange={setPage}
+                  limit={limit}
+                  onLimitChange={(val) => {
+                    setLimit(val)
+                    setPage(1)
+                  }}
+                  variant="black"
+                />
               </Box>
-            ))
-          )}
-        </Box>
+            )}
+          </>
+        )}
 
         {/* Modal for details */}
         <PokemonModal open={openModal} onClose={handleClose} data={selectedPokemon} />
-
-        {/* Pagination */}
-        {!searching && (
-          <PaginationControl
-            count={total}
-            page={page}
-            onPageChange={setPage}
-            limit={limit}
-            onLimitChange={(val) => {
-              setLimit(val)
-              setPage(1)
-            }}
-            variant="black"
-          />
-        )}
       </Box>
     </Box>
   )

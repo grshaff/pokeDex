@@ -38,7 +38,7 @@ export interface Types {
 }
 
 export const PokeTypes: Types[] = [
-  { name: 'normal' },
+  { name: 'normal'},
   { name: 'fire' },
   { name: 'water' },
   { name: 'electric' },
