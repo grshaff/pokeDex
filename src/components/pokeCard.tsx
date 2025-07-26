@@ -191,8 +191,7 @@ const PokeCard = dynamic(() => import('@/components/pokeCard'), {
               src={`/pokemon-types/type_${typeData.type.name}.webp`}
               alt={typeData.type.name}
               sx={{
-                width: { xs: "30px", sm: "40px" },
-                height: { xs: "30px", sm: "40px" },
+                width: { xs: "30px", sm: "80px" },
                 cursor: "pointer",
                 borderRadius: "4px",
                 transition: "transform 0.2s ease-in-out",

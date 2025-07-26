@@ -4,10 +4,15 @@ import { Autocomplete, Box, Container, Divider, Stack, TextField, Typography } f
 import TypeTable from "@/components/pokemonType/TypeTable"
 import { PokeTypes } from "@/types/pokemon-info"
 import type { Pokemon } from "@/types/pokemon"
+import {colors} from "@/types/pokemon-info"
 
 interface PokeType {
   name: string
 }
+
+const getTypeGradient = (type: string) => {
+    return colors[type] || '#777';
+  };
 
 export default function Layout() {
   const [selectedTypes, setSelectedTypes] = useState<PokeType[]>([])
@@ -17,6 +22,11 @@ export default function Layout() {
     setSelectedTypes(newValue)
   }
 
+  
+
+  const types: any = selectedTypes.map(t => t.name); // e.g., ['fire', 'flying']
+  const gradientBorder1 = getTypeGradient(types[0]);
+  const gradientBorder2 = getTypeGradient(types[1]);
   return (
     <Box
       sx={{
@@ -38,7 +48,7 @@ export default function Layout() {
             right: -380,
             pointerEvents: "none",
             backgroundColor: "white",
-            border: "180px solid blue",
+            border: `180px solid ${gradientBorder1}`,
             borderRadius: "50%",
           }}
         />
@@ -51,7 +61,7 @@ export default function Layout() {
             left: -380,
             pointerEvents: "none",
             backgroundColor: "white",
-            border: "180px solid blue",
+            border:types[1]? `180px solid ${gradientBorder2}`: `180px solid ${gradientBorder1}` ,
             borderRadius: "50%",
           }}
         />
