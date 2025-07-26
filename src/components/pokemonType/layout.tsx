@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { Autocomplete, Box, Container, Divider, Stack, TextField, Typography } from "@mui/material"
 import TypeTable from "@/components/pokemonType/TypeTable"
 import { PokeTypes, colors } from "@/types/pokemon-info"
@@ -80,6 +80,7 @@ export default function Layout() {
             right: -380,
             pointerEvents: "none",
             backgroundColor: "white",
+            transition: "border-color 1s ease-in-out",
             border: `180px solid ${gradientBorder1}`,
             borderRadius: "50%",
           }}
@@ -92,6 +93,7 @@ export default function Layout() {
             top: 650,
             left: -380,
             pointerEvents: "none",
+            transition: "border-color 1s ease-in-out",
             backgroundColor: "white",
             border: types[1] ? `180px solid ${gradientBorder2}` : `180px solid ${gradientBorder1}`,
             borderRadius: "50%",
@@ -131,7 +133,9 @@ export default function Layout() {
             <Divider orientation="vertical" flexItem />
             {/* Type Table */}
             <Box sx={{ flex: 1 }}>
+              <Suspense>
               <TypeTable selectedTypes={selectedTypes} />
+              </Suspense>
             </Box>
           </Stack>
         </Container>
