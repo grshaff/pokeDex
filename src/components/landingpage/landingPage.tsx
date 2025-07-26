@@ -29,11 +29,12 @@ export default function LandingPage({
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
+            textAlign:{xs:"center", md:"start"},
             paddingY: { xs: "20px", md: "50px" },
           }}
         >
           <Box>
-          <Reveal>
+          <Reveal width="100%">
             <Typography
               component="h1"
               sx={{
@@ -52,7 +53,7 @@ export default function LandingPage({
               place!
             </Typography>
             </Reveal>
-            <Reveal>
+            <Reveal width="100%">
             <Typography
               component="p"
               sx={{
@@ -80,7 +81,7 @@ export default function LandingPage({
                 (e.currentTarget.style.transform = "scale(1)")
               }
             >
-              <Reveal>
+              <Reveal width="100%">
               <Button
                 onClick={onScrollToPokedex}
                 variant="contained"
@@ -100,7 +101,7 @@ export default function LandingPage({
             </Box>
           </Box>
           {/* Pokemon image ^-^ */}
-          <Reveal>
+          <Reveal >
           <Box
             component="img"
             src="/pokemon-landing.webp"

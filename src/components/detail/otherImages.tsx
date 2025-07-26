@@ -75,7 +75,7 @@ export default function OtherImages({ data }: Props) {
               sx={{ justifyContent: "center", px: "10px" }}
             >
               {spriteEntries.map(([key, url], index) => (
-                <Grid>
+                <Grid key={index}>
                   <Box
                     component="img"
                     src={url}
