@@ -210,7 +210,15 @@ export default function PokeDex() {
                   <Grid key={pokemon.id} size="auto">
                     <Box
                       onClick={() => handleOpen(pokemon)}
-                      sx={{ cursor: "pointer" }}
+                      sx={{ cursor: "pointer" ,transition: "transform 0.2s ease-in-out",
+                      }}
+                      
+                      onMouseOver={(e) =>
+                        (e.currentTarget.style.transform = "scale(1.05)")
+                      }
+                      onMouseOut={(e) =>
+                        (e.currentTarget.style.transform = "scale(1)")
+                      }
                     >
                       <PokeCard data={pokemon} />
                     </Box>
