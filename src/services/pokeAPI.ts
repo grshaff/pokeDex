@@ -15,14 +15,12 @@ export const fetchPokemonDetail = async (search: string) => {
 
 export const fetchPokemon = async (id: string) => {
   const url = `${id}`;
-  console.log('Fetching URL:', url);
   const { data } = await axios.get<Pokemon>(`${API_BASE}/pokemon/${id}`);
   return data;
 };
 
 export const fetchPokemonEvolution = async (id: string) => {
   const url = `${id}`;
-  console.log('Fetching URL:', url);
   const { data } = await axios.get<Pokemon>(`${API_BASE}/evolution-chain/${id}`);
   return data;
 };

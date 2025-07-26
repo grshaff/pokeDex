@@ -38,6 +38,10 @@ export interface PokemonListResponse {
       stat: {
         name:string;
       }
+    }];
+    species:[{
+      name:string;
+      url:string
     }]
   }
   

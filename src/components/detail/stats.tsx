@@ -16,13 +16,14 @@ import { colors } from '@/types/pokemon-color';
 
 interface Props {
   data: Pokemon;
+  evolutionChain: [number, string, string][]; // [id, name, image]
 }
 
 const getStatColor = (types: string[]) => {
     const typeColors = types.map(type => colors[type] || '#777')
     return typeColors;}
 
-export default function Stats({ data }: Props) {
+export default function Stats({ data, evolutionChain }: Props) {
   const [progressValues, setProgressValues] = useState<number[]>(
     data.stats.map(() => 0) // initialize all progress to 0
   );
@@ -47,13 +48,16 @@ export default function Stats({ data }: Props) {
     };
   }, [data.stats]);
 
+
   const types = data.stats.map(s => s.stat.name); // e.g., ['fire', 'flying']
   const typesfiltered = types.map(str => str.replace('-',''));
   const statColor = getStatColor(typesfiltered);
-  console.log(statColor)
+
 
   return (
     <Box sx={{ backgroundColor: 'white', width: '100%' }}>
+
+        {/* Stats */}
       <Container
         maxWidth="xl"
         sx={{
@@ -150,6 +154,84 @@ export default function Stats({ data }: Props) {
                     </Box>
                   </Box>
                 </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Grid>
+      </Container>
+
+    {/* Evolution */}
+      <Container
+        maxWidth="xl"
+        sx={{
+          py: { xs: 4, sm: 2 },
+          px: { xs: 0, sm: 0, md: '70px', lg: '80px' },
+        }}
+      >
+        <Grid
+          container
+          spacing={4}
+          alignItems={{ xs: 'center', md: 'start' }}
+          justifyContent={{ xs: 'center', md: 'start' }}
+          direction={'column'}
+          marginY={{ xs: 0, md: 0 }}
+        >
+          <Stack direction={{ xs: 'row', md: 'column' }} spacing={4}>
+            <Typography
+              color="primary.main"
+              fontWeight={700}
+              fontSize={{
+                xs: '1rem',
+                sm: '1.2rem',
+                md: '1rem',
+                lg: '1.1rem',
+                xl: '1.4rem',
+              }}
+            >
+              Evolution:
+            </Typography>
+          </Stack>
+
+          {/* Stat Circles */}
+          <Box
+            width={{ xs: '300px', sm: '500px', md: 'auto' }}
+            marginX={'auto'}
+          >
+            <Grid
+              container
+              rowSpacing={{ xs: 1 }}
+              columnSpacing={{ xs: 2 }}
+              columns={{ xs: 1, sm: 2, md: 10 }}
+              sx={{ justifyContent: 'center', px: '10px' }}
+            >
+              {evolutionChain.map(([id, name, imgUrl], index) => (
+                <React.Fragment key={id}>
+                  <Box sx={{textAlign:'center'}}>
+                  <Box
+                    component="img"
+                    src={imgUrl}
+                    alt={name}
+                    onClick={() => window.location.href = `/detail/${id}`}
+                    sx={{
+                      width: { xs: 80, sm: 100, md: 120 },
+                      cursor: 'pointer',
+                      border: 2,
+                      borderRadius: '50%',
+                      p: 1,
+                      backgroundColor: 'white',
+                      '&:hover': { transform: 'scale(1.05)' },
+                      transition: 'transform 0.2s ease',
+                    }}
+                  />
+                  <Typography>{name}</Typography>
+                  </Box>
+                  
+                  {index < evolutionChain.length - 1 && (
+                    <Typography fontSize="2rem" color="text.secondary">
+                      →
+                    </Typography>
+                  )}
+                </React.Fragment>
               ))}
             </Grid>
           </Box>

@@ -7,29 +7,58 @@ import MainInfo from '@/components/detail/mainInfo';
 import OtherImages from '@/components/detail/otherImages';
 import Stats from '@/components/detail/stats';
 import { Pokemon } from '@/types/pokemon';
-import { fetchPokemon } from "@/services/pokeAPI";
+import { fetchPokemon, fetchPokemonEvolution } from "@/services/pokeAPI";
+import axios from 'axios';
 
 export default function DetailPage() {
   const { id } = useParams(); // get the ID from the route
   const [data, setData] = useState<Pokemon | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [evolutionChain, setEvolutionChain] = useState<[number, string, string][]>([]);
+
+  const parseEvolutionChain = (chain: any): string[] => {
+    const evoNames: string[] = [];
+  
+    let current = chain;
+    while (current) {
+      evoNames.push(current.species.name);
+      current = current.evolves_to?.[0];
+    }
+  
+    return evoNames;
+  };
 
   useEffect(() => {
     const getPokemonDetail = async () => {
       try {
         const response = await fetchPokemon(`${id}`);
         setData(response);
+
+        const speciesRes = await axios.get(response.species.url);
+        const evolutionChainUrl = speciesRes.data.evolution_chain.url;
+        const evolutionId = evolutionChainUrl.split("/").filter(Boolean).pop();
+
+        const evoData = await fetchPokemonEvolution(evolutionId);
+        const evoNames = parseEvolutionChain(evoData.chain);
+        
+        const evoWithImages = await Promise.all(
+          evoNames.map(async (name): Promise<[number, string, string]> => {
+            const pokemon = await fetchPokemon(name);
+            return [pokemon.id, name, pokemon.sprites.front_default];
+          })
+        );
+
+        setEvolutionChain(evoWithImages);
       } catch (err: any) {
-        setError('Pokémon not found or failed to load.');
+        console.error(err);
+        setError("Failed to load Pokémon data.");
       } finally {
         setLoading(false);
       }
     };
 
-    if (id) {
-      getPokemonDetail();
-    }
+    if (id) getPokemonDetail();
   }, [id]);
 
   if (loading) {
@@ -60,7 +89,7 @@ export default function DetailPage() {
     <Container>
       <MainInfo data={data} variant='page' onClick={handleClose}/>
       <OtherImages data={data}/>
-      <Stats data={data}/>
+      <Stats data={data} evolutionChain={evolutionChain} />
     </Container>
   );
 }
