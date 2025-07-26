@@ -1,63 +1,71 @@
-"use client"
-import { Suspense, useEffect, useState } from "react"
-import { Autocomplete, Box, Container, Divider, Stack, TextField, Typography } from "@mui/material"
-import TypeTable from "@/components/pokemonType/TypeTable"
-import { PokeTypes, colors } from "@/types/pokemon-info"
-import { useRouter, useSearchParams } from "next/navigation"
+"use client";
+import { useEffect, useState } from "react";
+import {
+  Autocomplete,
+  Box,
+  Container,
+  Divider,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import TypeTable from "@/components/pokemonType/TypeTable";
+import { PokeTypes, colors } from "@/types/pokemon-info";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface PokeType {
-  name: string
+  name: string;
 }
 
 const getTypeGradient = (type: string) => {
-  return colors[type] || "#777"
-}
+  return colors[type] || "#777";
+};
 
 export default function Layout() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const [selectedTypes, setSelectedTypes] = useState<PokeType[]>([])
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [selectedTypes, setSelectedTypes] = useState<PokeType[]>([]);
 
   useEffect(() => {
-    const query = searchParams.get("type")
+    const query = searchParams.get("type");
     if (query) {
       // handle URL encoded and regular plus signs
       const typeNames = decodeURIComponent(query)
-        .split(/[+\s]+/) // 
+        .split(/[+\s]+/) //
         .map((name) => name.trim().toLowerCase())
-        .filter((name) => name.length > 0)
+        .filter((name) => name.length > 0);
 
-      const initialSelected = PokeTypes.filter((type) => typeNames.includes(type.name.toLowerCase()))
-
+      const initialSelected = PokeTypes.filter((type) =>
+        typeNames.includes(type.name.toLowerCase())
+      );
 
       if (JSON.stringify(initialSelected) !== JSON.stringify(selectedTypes)) {
-        setSelectedTypes(initialSelected)
+        setSelectedTypes(initialSelected);
       }
     } else {
-
       if (selectedTypes.length > 0) {
-        setSelectedTypes([])
+        setSelectedTypes([]);
       }
     }
-  }, [searchParams]) 
+  }, [searchParams]);
 
   const handleTypeChange = (event: any, newValue: PokeType[]) => {
-    setSelectedTypes(newValue)
+    setSelectedTypes(newValue);
 
     if (newValue.length === 0) {
       // clear the URL parameter when no types are selected
-      router.replace(window.location.pathname, { scroll: false })
+      router.replace(window.location.pathname, { scroll: false });
     } else {
-      const typeNames = newValue.map((t) => t.name.toLowerCase())
-      const query = typeNames.join("+")
+      const typeNames = newValue.map((t) => t.name.toLowerCase());
+      const query = typeNames.join("+");
       // use encodeURIComponent to properly encode the query
-      router.replace(`?type=${encodeURIComponent(query)}`, { scroll: false })
+      router.replace(`?type=${encodeURIComponent(query)}`, { scroll: false });
     }
-  }
+  };
 
-  const types = selectedTypes.map((t) => t.name)
-  const gradientBorder1 = getTypeGradient(types[0])
-  const gradientBorder2 = getTypeGradient(types[1])
+  const types = selectedTypes.map((t) => t.name);
+  const gradientBorder1 = getTypeGradient(types[0]);
+  const gradientBorder2 = getTypeGradient(types[1]);
 
   return (
     <Box
@@ -95,7 +103,9 @@ export default function Layout() {
             pointerEvents: "none",
             transition: "border-color 1s ease-in-out",
             backgroundColor: "white",
-            border: types[1] ? `180px solid ${gradientBorder2}` : `180px solid ${gradientBorder1}`,
+            border: types[1]
+              ? `180px solid ${gradientBorder2}`
+              : `180px solid ${gradientBorder1}`,
             borderRadius: "50%",
           }}
         />
@@ -119,9 +129,15 @@ export default function Layout() {
                 filterSelectedOptions
                 value={selectedTypes}
                 onChange={handleTypeChange}
-                isOptionEqualToValue={(option, value) => option.name === value.name}
+                isOptionEqualToValue={(option, value) =>
+                  option.name === value.name
+                }
                 renderInput={(params) => (
-                  <TextField {...params} label="Filter by Types" placeholder="Select types..." />
+                  <TextField
+                    {...params}
+                    label="Filter by Types"
+                    placeholder="Select types..."
+                  />
                 )}
                 sx={{
                   "& .MuiOutlinedInput-root": {
@@ -133,13 +149,11 @@ export default function Layout() {
             <Divider orientation="vertical" flexItem />
             {/* Type Table */}
             <Box sx={{ flex: 1 }}>
-              <Suspense>
               <TypeTable selectedTypes={selectedTypes} />
-              </Suspense>
             </Box>
           </Stack>
         </Container>
       </Box>
     </Box>
-  )
+  );
 }
