@@ -1,5 +1,6 @@
+'use client'
 import React from 'react';
-import { Card, CardActions, CardContent, CardMedia, Typography, Box, Grid } from '@mui/material';
+import { Card, CardActions, CardContent, CardMedia, Typography, Box, Grid, Avatar, Divider } from '@mui/material';
 import Link from 'next/link';
 import { Pokemon } from "@/types/pokemon";
 import SkeletonCard from "@/components/skeletonCard";
@@ -7,10 +8,11 @@ import dynamic from 'next/dynamic';
 
 interface Props {
   data: Pokemon;
+  variant?: 'card' | 'table';
 }
 
 // Capital first letter for pokie name
-export default function MediaCard({ data }: Props) {
+export default function MediaCard({ data, variant="card" }: Props) {
     function capitalizeFirstLetter(str: string): string {
         if (str.length === 0) {
           return ""; 
@@ -26,6 +28,9 @@ const PokeCard = dynamic(() => import('@/components/pokeCard'), {
 
 
   return (
+    <Box>
+      {/* Card style */}
+    {variant === 'card' && (
     <Card sx={{ width:{xs:'250px',sm:'250px',md:'240px',lg:'300px'} , maxheight: '550px', boxShadow:8, borderRadius:'15px' }}>
         {/* Pokiee image */}
       <CardMedia
@@ -85,6 +90,125 @@ const PokeCard = dynamic(() => import('@/components/pokeCard'), {
       </Box>
       
     </Card>
+    )}
+
+{variant === 'table' && (
+    <Card
+    sx={{
+      width: "1000px",
+      maxWidth: "700px",
+      mb: 1,
+      boxShadow: 2,
+      borderRadius: "8px",
+      "&:hover": {
+        boxShadow: 4,
+        transform: "translateY(-2px)",
+        transition: "all 0.2s ease-in-out",
+      },
+    }}
+  >
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        p: 2,
+        gap: 2,
+      }}
+    >
+      {/* Image Column */}
+      <Box
+        sx={{
+          minWidth: { xs: "60px", sm: "80px" },
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Avatar
+          src={data.sprites.front_default || "/not-available.webp"}
+          alt={pokemonName}
+          sx={{
+            width: { xs: 60, sm: 80 },
+            height: { xs: 60, sm: 80 },
+            bgcolor: "grey.100",
+          }}
+        />
+      </Box>
+      <Divider orientation="vertical" flexItem />
+      {/* ID Column */}
+      <Box
+        sx={{
+          minWidth: { xs: "60px", sm: "80px" },
+          textAlign: "center",
+        }}
+      >
+        <Typography
+          variant="body2"
+          sx={{
+            color: "primary.light",
+            fontWeight: 700,
+            fontSize: { xs: "12px", sm: "14px" },
+          }}
+        >
+          #{String(data.id).padStart(3, "0")}
+        </Typography>
+      </Box>
+      <Divider orientation="vertical" flexItem />
+      {/* Pokemon Name Column */}
+      <Box
+        sx={{
+          flex: 1,
+          minWidth: 0, // Important for text truncation
+        }}
+      >
+        <Typography
+          variant="h6"
+          sx={{
+            color: "primary.main",
+            fontWeight: 600,
+            fontSize: { xs: "16px", sm: "18px", md: "20px" },
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {pokemonName}
+        </Typography>
+      </Box>
+      <Divider orientation="vertical" flexItem />
+      {/* Type Column */}
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          minWidth: { xs: "80px", sm: "120px" },
+          justifyContent: "flex-end",
+        }}
+      >
+        {data.types.map((typeData, index) => (
+          <Link key={index} href={typeData.type.url} target="_blank" rel="noopener noreferrer">
+            <Box
+              component="img"
+              src={`/pokemon-types/type_${typeData.type.name}.webp`}
+              alt={typeData.type.name}
+              sx={{
+                width: { xs: "30px", sm: "40px" },
+                height: { xs: "30px", sm: "40px" },
+                cursor: "pointer",
+                borderRadius: "4px",
+                transition: "transform 0.2s ease-in-out",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+              }}
+            />
+          </Link>
+        ))}
+      </Box>
+    </Box>
+  </Card>
+)
+}
+    </Box>
   );
 
 }

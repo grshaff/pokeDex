@@ -9,9 +9,10 @@ interface Props {
   onPageChange: (page: number) => void;
   limit: number;
   onLimitChange: (limit: number) => void;
+  variant?: 'black' | 'yellow';
 }
 
-export default function PaginationControl({ count, page, onPageChange, limit, onLimitChange }: Props) {
+export default function PaginationControl({ count, page, onPageChange, limit, onLimitChange, variant = 'yellow' }: Props) {
     const totalPokemon = (count*limit);
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   return (
@@ -46,6 +47,11 @@ export default function PaginationControl({ count, page, onPageChange, limit, on
           </MenuItem>
         ))}
         </Select>
+        {variant === 'black' && (
+      <Pagination size={isSmallScreen ? "small" : "medium"} variant="outlined" shape="rounded"  count={count} page={page} onChange={(_, val) => onPageChange(val)} sx={{
+
+        }}/> )}
+        {variant === 'yellow' && (
       <Pagination size={isSmallScreen ? "small" : "medium"} variant="outlined" shape="rounded"  count={count} page={page} onChange={(_, val) => onPageChange(val)} sx={{
             '& .MuiPaginationItem-root': {
             color: 'white',
@@ -64,7 +70,7 @@ export default function PaginationControl({ count, page, onPageChange, limit, on
             backgroundColor: 'rgba(255, 255, 255, 0.15)',
             borderColor: 'white !important',
             },
-        }}/>
+        }}/> )}
       <Typography>Total data: {totalPokemon}</Typography>
     </Stack>
   );
