@@ -10,7 +10,8 @@ export default function LandingPage({
   return (
     <Box
       sx={{
-        height: { xs: "100vh", sm: "110vh", md: "800px" },
+        height: { xs: "auto", sm: "auto", md: "800px" },
+        marginBottom:{xs:10, md:0},
         backgroundColor: "white",
         display: "flex",
         alignItems: "start",
