@@ -42,7 +42,6 @@ export const fetchPokemonByType = async (type: string): Promise<any> => {
     const { data } = await axios.get(`${API_BASE}/type/${type.toLowerCase()}`);
     return data;
   } catch (error) {
-    console.error(`Error fetching Pokémon of type '${type}':`, error);
     throw error;
   }
 };

@@ -84,7 +84,6 @@ export default function TypeTable({ selectedTypes }: TypeTableProps) {
         const sortedPokemon = detailedPokemon.sort((a, b) => a.id - b.id);
         setPokemonList(sortedPokemon);
       } catch (error) {
-        console.error("Error fetching Pokémon by types:", error);
         setPokemonList([]);
       } finally {
         setLoading(false);

@@ -27,7 +27,6 @@ export default function OtherImages({ data }: Props) {
       ([key, url]) => typeof url === "string" && url && !key.includes("_female") // filter out the female image bcoz its just a duplicate
     )
     .slice(0, 10);
-  console.log(spriteEntries);
 
   return (
     <Box sx={{ backgroundColor: "white", width: "100%" }}>

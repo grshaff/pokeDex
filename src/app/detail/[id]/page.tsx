@@ -44,9 +44,7 @@ export default function DetailPage() {
         const speciesRes = await axios.get(response.species.url);
         const evolutionChainUrl = speciesRes.data.evolution_chain.url;
         const evolutionId = evolutionChainUrl.split("/").filter(Boolean).pop();
-        console.log(evolutionId);
         const evoData = await fetchPokemonEvolutionChain(evolutionId);
-        console.log(evoData.chain);
         const evoNames = parseEvolutionChain(evoData.chain);
 
         const evoWithImages = await Promise.all(
@@ -58,7 +56,6 @@ export default function DetailPage() {
 
         setEvolutionChain(evoWithImages);
       } catch (err: any) {
-        console.error(err);
         setError("Failed to load Pokémon data.");
       } finally {
         setLoading(false);
