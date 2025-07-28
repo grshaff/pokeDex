@@ -1,4 +1,4 @@
-Created Giri Shaffaat, this project is intended for test case from Rey.id
+Created by Giri Shaffaat, this project is intended for test case from Rey.id
 
 # Pokémon Dex
 
