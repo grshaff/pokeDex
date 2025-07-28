@@ -1,4 +1,4 @@
-### Hi there my name is Giri Shaffaat and this project is intended for test case from Rey.id, Thanks for coming. <br> Enjoy and have a great day!
+Created Giri Shaffaat, this project is intended for test case from Rey.id
 
 # Pokémon Dex
 
