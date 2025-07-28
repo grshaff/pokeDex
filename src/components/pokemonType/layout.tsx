@@ -26,6 +26,9 @@ export default function Layout() {
   const searchParams = useSearchParams();
   const [selectedTypes, setSelectedTypes] = useState<PokeType[]>([]);
 
+  const PokeTypesFiltered = PokeTypes
+        .slice(0,18)
+  
   useEffect(() => {
     const query = searchParams.get("type");
     if (query) {
@@ -35,9 +38,9 @@ export default function Layout() {
         .map((name) => name.trim().toLowerCase())
         .filter((name) => name.length > 0);
 
-      const initialSelected = PokeTypes.filter((type) =>
-        typeNames.includes(type.name.toLowerCase())
-      );
+      const initialSelected = PokeTypes
+      .filter((type) => typeNames.includes(type.name.toLowerCase()))
+      .slice(0,18)
 
       if (JSON.stringify(initialSelected) !== JSON.stringify(selectedTypes)) {
         setSelectedTypes(initialSelected);
@@ -124,7 +127,7 @@ export default function Layout() {
                 size="small"
                 id="pokemon-type-filter"
                 limitTags={2}
-                options={PokeTypes}
+                options={PokeTypesFiltered}
                 getOptionLabel={(option) => option.name}
                 filterSelectedOptions
                 value={selectedTypes}
