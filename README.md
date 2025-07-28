@@ -1,4 +1,4 @@
-### Hello, Thanks for coming. <br>this README.md shows detailed information about this project, enjoy and have a great day!
+### Hi there my name is Giri Shaffaat and this project is intended for test case from Rey.id, Thanks for coming. <br> Enjoy and have a great day!
 
 # Pokémon Dex
 
@@ -52,7 +52,7 @@ To reproduce/run locally, follow these steps:
 In the root of the project, create file named `.env.local` and add environment variables. 
 
       ```plaintext
-      NEXT_PUBLIC_API_URL=https://pokeapi.co/api/v2
+      NEXT_PUBLIC_API_URL=URL //Poke API URL
       ```
 
 4. **Run dev server:**
