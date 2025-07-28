@@ -20,3 +20,17 @@
 :root::-webkit-scrollbar {
   display: none;
 }
+
+
+/*  intro class */
+.splashContainer {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.logo {
+  transition: all 1s ease-in-out;
+}
+
+.animateToNavbar {
+  opacity: 0;
+}
